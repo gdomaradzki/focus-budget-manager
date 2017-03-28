@@ -1,0 +1,68 @@
+// Override
+.container {
+  margin-top: 15px;
+}
+.row {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 992px) {
+  .module-flex-disperser {
+    width: 100% !important;
+  }
+}
+
+// Layouts
+// Main Header
+.layout-main-header {
+  display: flex;
+  background-color: $secondary-color;
+  padding: 15px 0;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+// Block List
+.layout-vertical-list {
+  display: flex;
+  flex-direction: column;
+  width: 175px;
+
+  & > .module-dropdown-list-item {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 680px) {
+    width: 140px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    & > .module-dropdown-list-item, .module-list-anchor {
+      justify-content: center;
+      text-align: center;
+      font-size: 18px;
+    }
+  }
+}
+
+// Search Form
+.layout-search-form {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    padding: 0 15px;
+  }
+}
