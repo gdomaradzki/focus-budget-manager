@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
@@ -23,16 +22,7 @@ const extractSass = new ExtractTextPlugin({
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   title: 'Focus Gestor de Orçamentos',
-  template: './src/index.ejs'
-});
-
-const inlineManifest = new InlineManifestWebpackPlugin({
-  name: 'webpackManifest'
-});
-
-const commonChunks = new webpack.optimize.CommonsChunkPlugin({
-  names: ['vendor'],
-  minChunks: Infinity
+  template: './src/index.html'
 });
 
 const uglifyJs = new webpack.optimize.UglifyJsPlugin({
@@ -43,15 +33,9 @@ const loaderOptions = new webpack.LoaderOptionsPlugin({
   minimize: true
 });
 
-const provider = new webpack.ProvidePlugin({
-  $: 'jquery',
-  jQuery: 'jquery'
-});
-
 module.exports = {
   entry: {
-    main: './main.js',
-    vendor: ['jquery']
+    main: './main.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -96,11 +80,8 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    commonChunks,
     htmlWebpackPlugin,
-    inlineManifest,
     uglifyJs,
     loaderOptions,
-    provider
   ]
 }
