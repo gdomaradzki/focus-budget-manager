@@ -1,2 +1,4 @@
 // Importing CSS
-require('./src/assets/scss/app.scss');
+import css from './src/assets/scss/app.scss';
+
+console.log('a');

@@ -4,13 +4,26 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 
+const isProd = process.env.NODE_ENV === 'production';
+const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
+const cssProd = ExtractTextPlugin.extract({
+  fallback: 'style-loader',
+  loader: ['css-loader', 'sass-loader'],
+  publicPath: '/dist'
+})
+
+let cssConfig = isProd ? cssProd : cssDev;
+
 // Plugins
 const extractSass = new ExtractTextPlugin({
-  filename: 'css/[name].[contenthash].css'
+  filename: 'css/[name].[contenthash].css',
+  disable: !isProd,
+  allChunks: true
 });
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: './index.ejs',
+  title: 'Focus Gestor de Orçamentos',
+  template: './src/index.ejs'
 });
 
 const inlineManifest = new InlineManifestWebpackPlugin({
@@ -18,7 +31,8 @@ const inlineManifest = new InlineManifestWebpackPlugin({
 });
 
 const commonChunks = new webpack.optimize.CommonsChunkPlugin({
-  names: ['vendor', 'manifest']
+  names: ['vendor'],
+  minChunks: Infinity
 });
 
 const uglifyJs = new webpack.optimize.UglifyJsPlugin({
@@ -40,13 +54,16 @@ module.exports = {
     vendor: ['jquery']
   },
   output: {
-    path: path.resolve(__dirname + '/dist/'),
-    publicPath: path.join(__dirname + '/src/'),
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: './',
     filename: '[name].bundle.js'
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname + '/dist/')
+    contentBase: path.resolve(__dirname, 'dist'),
+    compress: true,
+    stats: 'errors-only',
+    open: true
   },
   module: {
     rules: [
@@ -57,11 +74,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader'
+        use: cssConfig
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
+        test: /\.css$/
+        // loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
       },
       {
         test: /\.(jpg|png|gif)$/,

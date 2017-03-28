@@ -4,7 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --open",
+    "dev": "webpack-dev-server",
+    "prod": "npm run clean && webpack -p",
+    "clean": "rimraf ./dist/*",
     "watch": "webpack --progress --watch"
   },
   "repository": {
