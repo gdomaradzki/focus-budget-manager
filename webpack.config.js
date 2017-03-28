@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractSass = new ExtractTextPlugin({
+  filename: 'css/[name].[contenthash].css'
+})
 
 module.exports = {
   entry: ['./main.js'],
@@ -22,40 +25,28 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        loader: 'style-loader!css-loader!sass-loader'
       },
-      {
-        test: /\.(jpg|png|gif)$/,
-        loader: "file-loader?name=images/[hash].[ext]"
-      },
-      {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&minetype=application/font-woff"
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader"
-      }
-    ],
-    loaders: [
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
       },
       {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
+        test: /\.(jpg|png|gif)$/,
+        loader: 'file-loader?name=images/[hash].[ext]'
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader?limit=10000&minetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
       }
-    ]
+    ],
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'css/[name].[chunkhash].css',
-    }),
+    extractSass,
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
     }),
