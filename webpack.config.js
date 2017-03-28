@@ -1,12 +1,44 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+
+// Plugins
 const extractSass = new ExtractTextPlugin({
   filename: 'css/[name].[contenthash].css'
-})
+});
+
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+  template: './index.ejs',
+});
+
+const inlineManifest = new InlineManifestWebpackPlugin({
+  name: 'webpackManifest'
+});
+
+const commonChunks = new webpack.optimize.CommonsChunkPlugin({
+  names: ['vendor', 'manifest']
+});
+
+const uglifyJs = new webpack.optimize.UglifyJsPlugin({
+  sourceMap: true
+});
+
+const loaderOptions = new webpack.LoaderOptionsPlugin({
+  minimize: true
+});
+
+const provider = new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery'
+});
 
 module.exports = {
-  entry: ['./main.js'],
+  entry: {
+    main: './main.js',
+    vendor: ['jquery']
+  },
   output: {
     path: path.resolve(__dirname + '/dist/'),
     publicPath: path.join(__dirname + '/src/'),
@@ -14,7 +46,7 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname + '/')
+    contentBase: path.join(__dirname + '/dist/')
   },
   module: {
     rules: [
@@ -47,8 +79,11 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true
-    }),
+    commonChunks,
+    htmlWebpackPlugin,
+    inlineManifest,
+    uglifyJs,
+    loaderOptions,
+    provider
   ]
 }
