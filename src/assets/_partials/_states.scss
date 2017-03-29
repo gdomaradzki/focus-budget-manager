@@ -1,9 +1,9 @@
 .is-hidden {
-  transition: .3 ease;
+  transition: 1s ease;
   max-height: 0;
 }
 
 .is-collapsed {
-  transition: .3 ease;
-  max-height: auto;
+  transition: 3s ease;
+  max-height: 3000px;
 }

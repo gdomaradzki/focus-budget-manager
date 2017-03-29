@@ -25,9 +25,9 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: './src/index.html'
 });
 
-const uglifyJs = new webpack.optimize.UglifyJsPlugin({
-  sourceMap: true
-});
+// const uglifyJs = new webpack.optimize.UglifyJsPlugin({
+//   sourceMap: true
+// });
 
 const loaderOptions = new webpack.LoaderOptionsPlugin({
   minimize: true
@@ -81,7 +81,7 @@ module.exports = {
   plugins: [
     extractSass,
     htmlWebpackPlugin,
-    uglifyJs,
-    loaderOptions,
+    // uglifyJs,
+    loaderOptions
   ]
 }
