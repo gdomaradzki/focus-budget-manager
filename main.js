@@ -80,15 +80,3 @@ const Screensize = require('./src/modules/screensize.js');
   }
 
 })();
-
-// dropdown.budgetButton.addEventListener('click', () => {
-//   if (!isBudgetCollapsed) {
-//     // Abre o dropdown do orçamento
-//     dropdown.collapseDropdown(dropdown.budget)
-//     isBudgetCollapsed = true;
-//   } else {
-//     // Fecha o dropdown do orcamento
-//     dropdown.hideDropdown(dropdown.budget)
-//     isBudgetCollapsed = false;
-//   }
-// });
