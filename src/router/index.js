@@ -7,6 +7,7 @@ import Logo from '../components/modules/Logo'
 import Dropdown from '../components/modules/Dropdown'
 import DropdownArrow from '../components/modules/DropdownArrow'
 import SearchInput from '../components/modules/SearchInput'
+import BudgetList from '../components/modules/BudgetList'
 
 // Import Page Components
 import Home from '@/components/Home'
@@ -19,6 +20,7 @@ Vue.component('md-logo', Logo)
 Vue.component('md-dropdown-nav', Dropdown)
 Vue.component('md-dropdown-arrow', DropdownArrow)
 Vue.component('md-search-input', SearchInput)
+Vue.component('layout-budget-list', BudgetList)
 
 export default new Router({
   routes: [

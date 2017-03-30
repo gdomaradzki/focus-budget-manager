@@ -1,11 +1,11 @@
 <template>
   <nav class="md-dropdown-nav">
-    <button class="md-dropdown-btn btn">
+    <button class="md-dropdown-btn btn" v-on:click="dropdownButton ()">
       {{ dropdownName }}
       <md-dropdown-arrow></md-dropdown-arrow>
     </button>
 
-    <ul class="layout-vertical-list md-dropdown-list is-hidden">
+    <ul class="layout-vertical-list md-dropdown-list" v-bind:class="{ 'is-hidden': isHidden, 'is-collapsed': isCollapsed }">
       <li v-if="links!=null" v-for="link of links" class="md-dropdown-list-item">
         <router-link v-bind:to="link.routePath" class="md-list-anchor">{{ link.name }}</router-link>
       </li>
@@ -16,7 +16,19 @@
 <script>
   export default {
     name: 'Dropdown',
-    props: ['dropdownName', 'links']
+    props: ['dropdownName', 'links'],
+    data () {
+      return {
+        isHidden: true,
+        isCollapsed: false
+      }
+    },
+    methods: {
+      dropdownButton () {
+        this.isHidden = !this.isHidden
+        this.isCollapsed = !this.isCollapsed
+      }
+    }
   }
 </script>
 
@@ -29,7 +41,7 @@
     flex-direction: column;
     width: 175px;
 
-    & > .module-dropdown-list-item {
+    & > .md-dropdown-list-item {
       display: flex;
       align-items: center;
       height: 45px;
@@ -43,7 +55,7 @@
     @media (max-width: 600px) {
       width: 100%;
 
-      & > .module-dropdown-list-item, .module-list-anchor {
+      & > .md-dropdown-list-item, .md-list-anchor {
         justify-content: center;
         text-align: center;
         font-size: 18px;
@@ -89,7 +101,7 @@
 
       &:first-of-type {
         .md-dropdown-list {
-          top: 193px;
+          top: 125px;
         }
       }
 

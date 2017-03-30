@@ -44,4 +44,15 @@
       width: 100% !important;
     }
   }
+
+  // States
+  .is-hidden {
+    transition: .5s ease;
+    max-height: 0;
+  }
+
+  .is-collapsed {
+    transition: 3s ease;
+    max-height: 3000px;
+  }
 </style>
