@@ -1,6 +1,6 @@
 <template>
   <nav class="md-dropdown-nav">
-    <button class="md-dropdown-btn btn" v-on:click="dropdownButton ()">
+    <button class="md-dropdown-btn btn" v-on:click="dropdownButton (); toggle(button)">
       {{ dropdownName }}
       <md-dropdown-arrow></md-dropdown-arrow>
     </button>
@@ -16,17 +16,38 @@
 <script>
   export default {
     name: 'Dropdown',
-    props: ['dropdownName', 'links'],
+    props: ['dropdownName', 'button', 'links'],
     data () {
       return {
         isHidden: true,
-        isCollapsed: false
+        isCollapsed: false,
+        budgetBtn: false,
+        stateBtn: false
       }
     },
     methods: {
       dropdownButton () {
         this.isHidden = !this.isHidden
         this.isCollapsed = !this.isCollapsed
+      },
+
+      // Voltar neste metodo quando implementar as funcionalidades principais do projeto
+      toggle: function (button) {
+        if (button === 1) {
+          if (this.$data.budgetBtn) {
+            this.$data.budgetBtn = false
+          } else {
+            this.$data.budgetBtn = true
+            this.$data.stateBtn = false
+          }
+        } else if (button === 2) {
+          if (this.$data.stateBtn) {
+            this.$data.stateBtn = false
+          } else {
+            this.$data.stateBtn = true
+            this.$data.budgetBtn = false
+          }
+        }
       }
     }
   }

@@ -5,8 +5,8 @@
         <md-logo></md-logo>
         <div class="md-flex-disperser"></div>
         <md-search-input></md-search-input>
-        <md-dropdown-nav dropdownName="Orçamento" :links="budget"></md-dropdown-nav>
-        <md-dropdown-nav dropdownName="Estado" :links="state"></md-dropdown-nav>
+        <md-dropdown-nav dropdownName="Orçamento" :links="budget" :button="1"></md-dropdown-nav>
+        <md-dropdown-nav dropdownName="Estado" :links="state" :button="2"></md-dropdown-nav>
       </header>
     </div>
   </div>
@@ -19,6 +19,7 @@
       return {
         budget: [
           {
+            id: '1',
             name: 'Novo',
             routePath: '/novo/orcamento'
           },

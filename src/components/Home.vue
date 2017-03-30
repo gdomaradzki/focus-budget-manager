@@ -4,7 +4,10 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">orçamentos</h1>
-          <layout-budget-list :lists="teste"></layout-budget-list>
+          <!-- <div class="layout-lists-container" v-if="clientList=!null" v-for="client of clientList">
+
+          </div> -->
+          <layout-budget-list v-if="clientList!=null" v-for="client in clientList" :clients="clientList.clients"></layout-budget-list>
         </section>
       </main>
     </div>
@@ -12,17 +15,30 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+  const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'Home',
     data () {
       return {
-        teste: [
-          {
-            client: 'Cliente',
-            state: 'Estado',
-            description: 'Ações'
+        clientList: {
+          clients: []
+        }
+      }
+    },
+
+    mounted: function () {
+      this.getClients()
+    },
+
+    methods: {
+      getClients () {
+        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
+          for (let i in res.data) {
+            let clients = this.clientList.clients
+            clients.push(res.data[i])
           }
-        ]
+        })
       }
     }
   }
@@ -42,5 +58,7 @@
     text-transform: uppercase;
     font-size: 22px;
     padding-top: 30px;
+    padding-bottom: 30px;
   }
+  
 </style>

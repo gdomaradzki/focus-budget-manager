@@ -1,6 +1,6 @@
 <template>
   <div class="layout-budget-list">
-    <div v-if="lists!=null" v-for="item of lists" class="md-budget-list">
+    <div v-if="clients!=null" v-for="item of clients" class="md-budget-list">
       <div class="md-budget-client">{{ item.client }}</div>
       <div class="md-budget-state">{{ item.state }}</div>
       <div class="md-budget-description"> {{ item.description }}</div>
@@ -24,17 +24,13 @@
 <script>
   export default {
     name: 'BudgetList',
-    props: ['lists']
+    props: ['clients']
   }
 </script>
 
 <style lang="scss" scoped>
   $primary-color: #f1f1f1;
   $secondary-color: rgba(0, 0, 0, .5);
-
-  // .layout-budget-list {
-  //   display: flex;
-  // }
 
   .md-budget-list {
     display: flex;
@@ -55,6 +51,30 @@
       display: none;
     }
 
+    &:not(:first-of-type) {
+      & > * {
+        background-color: rgba(0, 255, 231, 0.63);
+        height: 45px;
+      }
+
+      .md-budget-description {
+        display: none;
+      }
+
+      .md-budget-action {
+        display: flex;
+      }
+
+      @media (max-width: 800px) {
+        flex-direction: column;
+
+        & > * {
+          justify-content: center;
+          text-align: center;
+        }
+      }
+    }
+
     &:first-of-type {
       & > * {
         height: 45px;
@@ -62,6 +82,7 @@
 
       .md-budget-description {
         display: flex;
+        flex-grow: 1;
       }
 
       .md-budget-action {
