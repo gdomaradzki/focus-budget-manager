@@ -7,15 +7,15 @@ let Clients = mongoose.model('Clients');
 
 api.newClient = (req, res) => {
   let client = new Clients();
-  client.client = req.body.client;
-  client.state = req.body.state;
+  client.client_name = req.body.client_name;
+  client.client_email = req.body.client_email;
 
   client.save(error => {
     if (error) {
-      res.json(error);
+      return res.send();
     }
-    res.json({ Message: 'Task created' })
-    console.log('Task created');
+    res.json({ Message: 'Client created' })
+    console.log('Client created');
   })
 }
 

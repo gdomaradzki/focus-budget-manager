@@ -8,19 +8,25 @@ import Dropdown from '../components/modules/Dropdown'
 import DropdownArrow from '../components/modules/DropdownArrow'
 import SearchInput from '../components/modules/SearchInput'
 import BudgetList from '../components/modules/BudgetList'
+import CreateBudget from '../components/modules/CreateBudget'
 
 // Import Page Components
 import Home from '@/components/Home'
+import Budget from '@/components/Budget'
 
 Vue.use(Router)
 
 // Define components
+// Layouts
 Vue.component('layout-header', Header)
+Vue.component('layout-budget-list', BudgetList)
+
+// Modules
 Vue.component('md-logo', Logo)
 Vue.component('md-dropdown-nav', Dropdown)
 Vue.component('md-dropdown-arrow', DropdownArrow)
 Vue.component('md-search-input', SearchInput)
-Vue.component('layout-budget-list', BudgetList)
+Vue.component('md-create-new-budget-item', CreateBudget)
 
 export default new Router({
   routes: [
@@ -28,6 +34,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/novo/orcamento',
+      name: 'Budget',
+      component: Budget
     }
   ]
 })

@@ -1,12 +1,12 @@
 let mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
-  client: {
+  client_name: {
     type: String,
     required: true
   },
 
-  state: {
+  client_email: {
     type: String,
     required: true
   }

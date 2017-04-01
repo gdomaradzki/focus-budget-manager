@@ -4,10 +4,7 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">orçamentos</h1>
-          <!-- <div class="layout-lists-container" v-if="clientList=!null" v-for="client of clientList">
-
-          </div> -->
-          <layout-budget-list v-if="clientList!=null" v-for="client in clientList" :clients="clientList.clients"></layout-budget-list>
+          <layout-budget-list :budgets="budgetList.budgets"></layout-budget-list>
         </section>
       </main>
     </div>
@@ -21,8 +18,8 @@
     name: 'Home',
     data () {
       return {
-        clientList: {
-          clients: []
+        budgetList: {
+          budgets: []
         }
       }
     },
@@ -33,10 +30,10 @@
 
     methods: {
       getClients () {
-        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
+        Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
           for (let i in res.data) {
-            let clients = this.clientList.clients
-            clients.push(res.data[i])
+            let budgets = this.budgetList.budgets
+            budgets.push(res.data[i])
           }
         })
       }
@@ -60,5 +57,9 @@
     padding-top: 30px;
     padding-bottom: 30px;
   }
-  
+
+  .layout-budget-area {
+    margin: 0 15px;
+    padding-bottom: 60px;
+  }
 </style>

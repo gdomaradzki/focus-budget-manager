@@ -1,9 +1,9 @@
 <template>
   <div class="layout-budget-list">
-    <div v-if="clients!=null" v-for="item of clients" class="md-budget-list">
-      <div class="md-budget-client">{{ item.client }}</div>
-      <div class="md-budget-state">{{ item.state }}</div>
-      <div class="md-budget-description"> {{ item.description }}</div>
+    <div v-for="budget of budgets" class="md-budget-list">
+      <div class="md-budget-client">{{ budget.client }}</div>
+      <div class="md-budget-state">{{ budget.state }}</div>
+      <div class="md-budget-description"> {{ budget.description }}</div>
       <div class="md-budget-action">
         <ul class="layout-budget-action-menu">
           <li class="md-budget-action-item">
@@ -24,7 +24,7 @@
 <script>
   export default {
     name: 'BudgetList',
-    props: ['clients']
+    props: ['budgets']
   }
 </script>
 
@@ -53,7 +53,7 @@
 
     &:not(:first-of-type) {
       & > * {
-        background-color: rgba(0, 255, 231, 0.63);
+        background-color: rgba(55, 255, 236, .61);
         height: 45px;
       }
 
@@ -63,6 +63,10 @@
 
       .md-budget-action {
         display: flex;
+
+        @media (max-width: 600px) {
+          height: auto;
+        }
       }
 
       @media (max-width: 800px) {
@@ -99,10 +103,27 @@
       display: flex;
       margin: 0;
       justify-content: center;
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        width: 100%;
+      }
     }
 
     .md-budget-action-item {
-      margin: 0 15px;
+      margin: 0 9px;
+
+      .btn {
+        padding: 0 10px;
+      }
+
+      @media (max-width: 600px) {
+        margin: 15px;
+
+        .btn {
+          width: 100%;
+        }
+      }
     }
   }
 </style>

@@ -6,7 +6,7 @@
     </button>
 
     <ul class="layout-vertical-list md-dropdown-list" v-bind:class="{ 'is-hidden': isHidden, 'is-collapsed': isCollapsed }">
-      <li v-if="links!=null" v-for="link of links" class="md-dropdown-list-item">
+      <li v-for="link of links" class="md-dropdown-list-item">
         <router-link v-bind:to="link.routePath" class="md-list-anchor">{{ link.name }}</router-link>
       </li>
     </ul>
