@@ -19,6 +19,9 @@ node server.js
 # serve with hot reload at localhost:8080
 npm run dev
 
+# some people might have errors with modules not being properly installed, even after running `npm install`
+run `npm install -only=dev`
+
 # build for production with minification
 npm run build
 
