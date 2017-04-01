@@ -8,6 +8,14 @@
 # install dependencies
 npm install
 
+# start mongodb
+mongod --dbpath path_to_database
+
+database folder is focus-gestor-orcamentos/server/database
+
+# start server
+node server.js
+
 # serve with hot reload at localhost:8080
 npm run dev
 
@@ -26,5 +34,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
