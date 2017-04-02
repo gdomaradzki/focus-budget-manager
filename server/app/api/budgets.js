@@ -11,10 +11,14 @@ api.newBudget = (req, res) => {
   budget.state = req.body.state;
   budget.title = req.body.title;
   budget.items = req.body.items;
+  budget.items.item_title = req.body.items.item_title;
+  budget.items.item_quantity = req.body.items.item_quantity;
+  budget.items.item_price = req.body.items.item_price;
+  budget.items.item_subtotal = req.body.items.item_subtotal;
 
   budget.save(error => {
     if (error) {
-      res.json(error);
+      return res.send();
     }
     res.json({ Message: 'Budget created' })
     console.log('Budget created');

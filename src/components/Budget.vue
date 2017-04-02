@@ -12,7 +12,10 @@
           </select>
           <button class="md-new-budget-btn btn blue lighten-2" type="button" @click="createNewBudgetItem ()">+</button>
         </div>
-        <md-create-new-budget-item :budgetItems="budgetItemsList.items"></md-create-new-budget-item>
+        <md-create-new-budget-item v-for="items of budgetList"
+                                   :budgetItems="budgetList.budgets"
+                                   :budgetItemDeletion="deleteButgetItem">
+        </md-create-new-budget-item>
         <h4 class="md-budget-total">
           <span class="md-budget-total-bold">total</span>
           R$ {{ totalPrice }}
@@ -24,9 +27,18 @@
           <input type="text" name="new-client-email" v-model="newClient.email" placeholder="E-mail">
         </div>
         <div class="md-new-client-actions">
-          <button class="md-new-client-cancel-btn btn red lighten-2" type="button" name="new-client-cancel-btn"
-                  @click="closeNewClient ()">Cancelar</button>
-          <button class="md-new-client-submit-btn btn" type="submit" name="new-client-submit-btn" @click="postNewClient ()">Salvar Cliente</button>
+          <button class="md-new-client-cancel-btn btn red lighten-2"
+                  type="button"
+                  name="new-client-cancel-btn"
+                  @click="closeNewClient ()">
+                  Cancelar
+          </button>
+          <button class="md-new-client-submit-btn btn"
+                  type="submit"
+                  name="new-client-submit-btn"
+                  @click="postNewClient ()">
+                  Salvar Cliente
+          </button>
         </div>
       </article>
     </div>
@@ -49,11 +61,10 @@
           name: '',
           email: ''
         },
-        budgetItemsList: {
-          itemsList: {
-            items: []
-          }
-        }
+        budgetList: {
+          budgets: []
+        },
+        subtotal: ''
       }
     },
     watch: {
@@ -61,6 +72,9 @@
         if (value === 'new-client') {
           this.isHidden = !this.isHidden
           this.isVisible = !this.isVisible
+        } else {
+          this.isHidden = true
+          this.isVisible = false
         }
       }
     },
@@ -72,19 +86,48 @@
       getBudgetItems () {
         Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
           for (let i in res.data) {
-            let budgetsItems = this.budgetItemsList.itemsList.items
-            budgetsItems.push(res.data[i])
-            console.log(budgetsItems)
+            let budgets = this.budgetList.budgets
+            budgets.push(res.data[i])
+            // console.log(items)
           }
         })
       },
 
+      createNewBudgetItem () {
+        let budgets = this.budgetList.budgets
+        let budget = {
+          client: '',
+          description: '',
+          state: '',
+          title: '',
+          items: [
+            {
+              itemTitle: '',
+              itemQuantity: null,
+              itemPrice: null,
+              itemSubtotal: null
+            }
+          ]
+        }
+        budgets.push(budget)
+      },
+
+      // postNewBudgetItem () {
+      //   Axios.post(`${urlPrefix}/api/budgets`, {
+      //
+      //   })
+      // }
+
+      deleteButgetItem () {
+        console.log('teste')
+      },
+
       postNewBudget () {
         Axios.post(`${urlPrefix}/api/budgets`, {
-          client: this.budgetList.itemsList.client,
-          state: this.budgetList.itemsList.state,
-          title: this.budgetList.itemsList.title,
-          items: this.budgetList.itemsList.items
+          client: this.budgetList.budgets.client,
+          state: this.budgetList.budgets.state,
+          title: this.budgetList.budgets.title,
+          items: this.budgetList.budgets.items
         }).then((res) => {
           console.log(res)
         }).catch((error) => {

@@ -1,11 +1,15 @@
 <template>
   <div class="layout-create-new-budget-item">
     <div class="md-create-new-budget-item" v-for="item of budgetItems">
-      <button class="md-delete-budget-item-btn btn red lighten-2" type="button">-</button>
-      <input class="md-budget-item-title" v-model="item.title" name="budget-item-title" type="text" placeholder="Título do item">
-      <input class="md-budget-item-quantity" v-model="item.quantity" name="budget-item-qt" type="text" placeholder="0">
-      <input class="md-budget-item-price" v-model="item.price" name="budget-item-price" type="text" placeholder="00,00">
-      <span class="md-budget-item-subtotal">R$ {{ item.subtotal }}</span>
+      <button class="md-delete-budget-item-btn btn red lighten-2"
+              type="button"
+              @click="test ()">
+              -
+      </button>
+      <input class="md-budget-item-title" v-model="title" name="budget-item-title" type="text" placeholder="Título do item">
+      <input class="md-budget-item-quantity" v-model="quantity" name="budget-item-qt" type="text" placeholder="0">
+      <input class="md-budget-item-price" v-model="price" name="budget-item-price" type="text" placeholder="00.00">
+      <span class="md-budget-item-subtotal">R$ {{ quantity * price }}</span>
     </div>
   </div>
 </template>
@@ -13,7 +17,13 @@
 <script>
   export default {
     name: 'CreateBudget',
-    props: ['budgetItems']
+    props: ['budgetItems', 'budgetItemDeletion'],
+    data () {
+      return {
+        quantity: null,
+        price: null
+      }
+    }
   }
 </script>
 
