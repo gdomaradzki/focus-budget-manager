@@ -5,8 +5,8 @@
         <md-logo></md-logo>
         <div class="md-flex-disperser"></div>
         <md-search-input></md-search-input>
-        <md-dropdown-nav dropdownName="Orçamento" :links="budget" :button="1"></md-dropdown-nav>
-        <md-dropdown-nav dropdownName="Estado" :links="state" :button="2"></md-dropdown-nav>
+        <md-dropdown-nav dropdownName="Budget" :links="budget" :button="1"></md-dropdown-nav>
+        <md-dropdown-nav dropdownName="Status" :links="state" :button="2"></md-dropdown-nav>
       </header>
     </div>
   </div>
@@ -20,33 +20,33 @@
         budget: [
           {
             id: '1',
-            name: 'Novo',
+            name: 'New',
             routePath: '/novo/orcamento'
           },
           {
-            name: 'Listar',
+            name: 'List',
             routePath: '/'
           },
           {
-            name: 'Clientes',
+            name: 'Clients',
             routePath: '/'
           }
         ],
         state: [
           {
-            name: 'Aprovados',
+            name: 'Approved',
             routePath: '/'
           },
           {
-            name: 'Recusados',
+            name: 'Denied',
             routePath: '/'
           },
           {
-            name: 'Aguardando',
+            name: 'Waiting',
             routePath: '/'
           },
           {
-            name: 'A Editar',
+            name: 'Being Edited',
             routePath: '/'
           }
         ]

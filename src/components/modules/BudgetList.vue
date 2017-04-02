@@ -7,13 +7,13 @@
       <div class="md-budget-action">
         <ul class="layout-budget-action-menu">
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn">Visualizar</button>
+            <button type="button" class="md-action-btn btn">View</button>
           </li>
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn">Editar</button>
+            <button type="button" class="md-action-btn btn">Edit</button>
           </li>
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn">Excluir</button>
+            <button type="button" class="md-action-btn btn">Delete</button>
           </li>
         </ul>
       </div>

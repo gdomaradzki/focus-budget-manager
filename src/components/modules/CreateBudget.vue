@@ -1,15 +1,15 @@
 <template>
   <div class="layout-create-new-budget-item">
-    <div class="md-create-new-budget-item" v-for="item of budgetItems">
+    <div class="md-create-new-budget-item" v-for="item of budgetItems.budgets">
       <button class="md-delete-budget-item-btn btn red lighten-2"
               type="button"
               @click="test ()">
               -
       </button>
-      <input class="md-budget-item-title" v-model="title" name="budget-item-title" type="text" placeholder="Título do item">
-      <input class="md-budget-item-quantity" v-model="quantity" name="budget-item-qt" type="text" placeholder="0">
-      <input class="md-budget-item-price" v-model="price" name="budget-item-price" type="text" placeholder="00.00">
-      <span class="md-budget-item-subtotal">R$ {{ quantity * price }}</span>
+      <input class="md-budget-item-title" v-model="item.itemTitle" name="budget-item-title" type="text" placeholder="Budget Item Title">
+      <input class="md-budget-item-quantity" v-model="item.itemQuantity" name="budget-item-qt" type="text" placeholder="0">
+      <input class="md-budget-item-price" v-model="item.itemPrice" name="budget-item-price" type="text" placeholder="00.00">
+      <span class="md-budget-item-subtotal">$ {{ item.items[0].itemSubtotal }}</span>
     </div>
   </div>
 </template>
@@ -19,11 +19,39 @@
     name: 'CreateBudget',
     props: ['budgetItems', 'budgetItemDeletion'],
     data () {
-      return {
-        quantity: null,
-        price: null
-      }
+      return {}
+    },
+    watch: {
+      // 'budgetItems': function () {
+      //   let budgets = this.budgetItems
+      //   for (let i in budgets) {
+      //     let quantity = budgets[i].items[i].itemQuantity
+      //     let price = budgets[i].items[i].itemPrice
+      //     let subtotal = quantity * price
+      //     budgets[i].items[i].itemSubtotal = subtotal
+      //     console.log(budgets[i].items[i].itemSubtotal)
+      //   }
+      // }
+    },
+    mounted: function () {
+      // setInterval(() => {
+      //   console.log(this.budgetItems.budgets)
+      // }, 1000)
     }
+    // watch: {
+    //   'item.itemSubtotal'
+    // },
+    // watch: {
+    //   'clientList': function (value) {
+    //     if (value === 'new-client') {
+    //       this.isHidden = !this.isHidden
+    //       this.isVisible = !this.isVisible
+    //     } else {
+    //       this.isHidden = true
+    //       this.isVisible = false
+    //     }
+    //   }
+    // },
   }
 </script>
 
@@ -96,5 +124,17 @@
     @media (max-width: 600px) {
       width: 100%;
     }
+  }
+
+  .is-area-hidden {
+    transition: .3s ease;
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+
+  .is-area-visible {
+    transition: .5s ease;
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>

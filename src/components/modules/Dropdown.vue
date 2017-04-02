@@ -1,6 +1,6 @@
 <template>
   <nav class="md-dropdown-nav">
-    <button class="md-dropdown-btn btn" v-on:click="dropdownButton (); toggle(button)">
+    <button class="md-dropdown-btn btn" @click="dropdownButton (); toggle(button)">
       {{ dropdownName }}
       <md-dropdown-arrow></md-dropdown-arrow>
     </button>

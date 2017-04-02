@@ -32,7 +32,7 @@ api.getBudgets = (req, res) => {
     }
     res.status(200).json(budget);
     return true;
-  })
+  }).skip(1)
 }
 
 module.exports = api;
