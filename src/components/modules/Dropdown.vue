@@ -139,6 +139,7 @@
     position: absolute;
     top: 79px;
     left: 0;
+    z-index: 100;
   }
 
   .md-dropdown-list-item {

@@ -8,7 +8,7 @@ var schema = mongoose.Schema({
 
   state: {
     type: String,
-    required: true
+    required: false
   },
 
   title: {
@@ -25,22 +25,18 @@ var schema = mongoose.Schema({
     {
       item_title: {
         type: String,
-        required: true
       },
 
       item_quantity: {
         type: Number,
-        required: true
       },
 
       item_price: {
         type: Number,
-        required: true
       },
 
       item_subtotal: {
         type: Number,
-        required: true
       }
     }
   ]

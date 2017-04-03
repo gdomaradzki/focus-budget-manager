@@ -19,6 +19,7 @@
   // Override Materialize Default
   .container {
     margin-top: 15px !important;
+    position: relative;
     .row {
       margin-bottom: 0;
     }

@@ -6,9 +6,9 @@
               @click="deleteBudgetItem(item)">
               -
       </button>
-      <input class="md-budget-item-title" type="text" placeholder="Budget Item Title" v-model="item.itemTitle">
-      <input class="md-budget-item-quantity" type="text" placeholder="Qty" v-model="item.itemQuantity">
-      <input class="md-budget-item-price" type="text" placeholder="Price" v-model="item.itemPrice">
+      <input class="md-budget-item-title" name="new-item-title" type="text" placeholder="Budget Item Title" v-model="item.itemTitle">
+      <input class="md-budget-item-quantity" name="new-item-quantity" type="text" placeholder="Qty" v-model="item.itemQuantity">
+      <input class="md-budget-item-price" name="new-item-price" type="text" placeholder="Price" v-model="item.itemPrice">
       <span class="md-budget-item-subtotal">$ {{ item.itemSubtotal }} </span>
     </div>
   </div>

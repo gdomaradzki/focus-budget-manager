@@ -11,8 +11,8 @@
         </div>
 
         <form class="md-new-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
-          <input type="text" class="md-new-budget-description" placeholder="Description" v-model="budgets[0].title">
-          <select class="md-select-client" required v-model="budgets[0].client">
+          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budgets[0].title">
+          <select name="new-budget-clients" class="md-select-client" required v-model="budgets[0].client" v-model="clients">
             <option disabled hidden value="">Choose a Client</option>
             <option value="new-client">New Client</option>
             <option v-for="client of clientList"> {{ client.client_name }} </option>
@@ -24,8 +24,13 @@
         </form>
         <h4 class="md-budget-total">
           <span class="md-budget-total-bold">total</span>
-          $ {{ budgets[0].totalPrice }}
+          $ {{ budgets[0].total_price }}
         </h4>
+        <div class="layout-send-budget">
+          <button class="md-send-budget-btn btn" @click="postNewBudget()">
+            send
+          </button>
+        </div>
       </section>
 
       <article class="layout-new-client-area" :class="{ 'is-area-hidden': isNewClientHidden, 'is-area-visible': isNewClientVisible }">
@@ -45,7 +50,7 @@
           <button class="md-new-client-submit-btn btn"
                   type="submit"
                   name="new-client-submit-btn"
-                  @click="postNewClient (); getAllClients()">
+                  @click="postNewClient ();">
                   Save client
           </button>
         </div>
@@ -107,10 +112,9 @@
         let budgets = this.budgets
         let budget = {
           client: '',
-          description: '',
-          state: '',
           title: '',
-          totalPrice: 0,
+          state: '',
+          total_price: 0,
           items: []
         }
         budgets.push(budget)
@@ -143,12 +147,24 @@
           console.log(error)
         })
       },
+      postNewBudget: function () {
+        Axios.post(`${urlPrefix}/api/budgets`, {
+          client: this.budgets[0].client,
+          title: this.budgets[0].title,
+          total_price: this.budgets[0].total_price,
+          items: this.budgets[0].items
+        }).then((res) => {
+          console.log(res)
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
       calcTotal: function () {
         let budgets = this.budgets[0].items
         let total = 0
         for (let i in budgets) {
           total += budgets[i].itemSubtotal
-          this.budgets[0].totalPrice = total
+          this.budgets[0].total_price = total
         }
       }
     }
@@ -169,8 +185,13 @@
     position: relative;
   }
 
+  .layout-send-budget {
+    margin: 15px 15px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   input[type=text] {
-    // margin: 0 15px;
     height: 35px;
     border: 1px solid #9e9e9e;
     padding: 0 15px;
@@ -198,6 +219,10 @@
     .md-title {
       margin-top: 0;
       padding-top: 0;
+    }
+
+    input[type=text] {
+      margin: 0 15px;
     }
   }
 

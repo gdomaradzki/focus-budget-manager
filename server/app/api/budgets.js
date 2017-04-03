@@ -3,20 +3,14 @@ let mongoose = require('mongoose');
 
 let api = {};
 
-let Budget = mongoose.model('Budgets');
+let Budgets = mongoose.model('Budgets');
 
 api.newBudget = (req, res) => {
-  let budget = new Budget();
+  let budget = new Budgets();
   budget.client = req.body.client;
-  budget.clientEmail = req.body.client_email;
-  budget.state = req.body.state;
   budget.title = req.body.title;
-  budget.totalPrice = req.body.total_price;
+  budget.total_price = req.body.total_price;
   budget.items = req.body.items;
-  budget.items.itemTitle = req.body.items.item_title;
-  budget.items.itemQuantity = req.body.items.item_quantity;
-  budget.items.itemPrice = req.body.items.item_price;
-  budget.items.itemSubtotal = req.body.items.item_subtotal;
 
   budget.save(error => {
     if (error) {
@@ -28,13 +22,13 @@ api.newBudget = (req, res) => {
 }
 
 api.getBudgets = (req, res) => {
-  Budget.find((error, budget) => {
+  Budgets.find((error, budget) => {
     if (error) {
       res.send(error);
     }
     res.status(200).json(budget);
     return true;
-  }).skip(1)
+  })
 }
 
 module.exports = api;
