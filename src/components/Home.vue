@@ -3,7 +3,7 @@
     <div class="col s12">
       <main class="layout-main-page">
         <section class="layout-budget-area">
-          <h1 class="md-title">Budgets</h1>
+          <h1 class="md-title">Budget Manager</h1>
           <layout-budget-list :budgets="budgetList.budgets"></layout-budget-list>
         </section>
       </main>

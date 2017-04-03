@@ -16,6 +16,11 @@ var schema = mongoose.Schema({
     required: true
   },
 
+  total_price: {
+    type: Number,
+    required: true
+  },
+
   items: [
     {
       item_title: {

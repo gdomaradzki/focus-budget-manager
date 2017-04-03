@@ -3,41 +3,50 @@
     <div class="col s12">
       <section class="layout-new-budget-area">
         <h2 class="md-title">new budget</h2>
-        <div class="md-new-budget">
-          <textarea class="md-new-budget-description" name="budget-description" placeholder="Description"></textarea>
-          <select class="md-select-client" v-model="clientList" required>
-            <option disabled hidden value="">Client</option>
-            <option value="new-client">New Client</option>
-            <option v-for="client of clients"> {{ client.client_name }} </option>
-          </select>
-          <button class="md-new-budget-btn btn blue lighten-2" type="button" @click="createNewBudgetItem ()">+</button>
+
+        <div class="layout-create-new">
+          <button class="md-create-budget-btn btn" @click="newBudgetArea();">
+            Create New
+          </button>
         </div>
-        <md-create-new-budget-item v-for="items of budgetList"
-                                   :budgetItems="budgetList"
-                                   :budgetItemDeletion="deleteButgetItem">
-        </md-create-new-budget-item>
+
+        <form class="md-new-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
+          <input type="text" class="md-new-budget-description" placeholder="Description" v-model="budgets[0].title">
+          <select class="md-select-client" required v-model="budgets[0].client">
+            <option disabled hidden value="">Choose a Client</option>
+            <option value="new-client">New Client</option>
+            <option v-for="client of clientList"> {{ client.client_name }} </option>
+          </select>
+          <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
+          <md-create-new-budget-item v-for="item of budgets"
+                                     :budgetItems="budgets[0].items">
+          </md-create-new-budget-item>
+        </form>
         <h4 class="md-budget-total">
           <span class="md-budget-total-bold">total</span>
-          $ {{ totalPrice }}
+          $ {{ budgets[0].totalPrice }}
         </h4>
       </section>
-      <article class="layout-new-client-area" v-bind:class="{ 'is-area-hidden': isHidden, 'is-area-visible': isVisible }">
+
+      <article class="layout-new-client-area" :class="{ 'is-area-hidden': isNewClientHidden, 'is-area-visible': isNewClientVisible }">
+        <h5 class="md-title">register client</h5>
         <div class="md-new-client-info">
-          <input type="text" name="new-client-name" v-model="newClient.name" placeholder="Nome do Cliente">
-          <input type="text" name="new-client-email" v-model="newClient.email" placeholder="E-mail">
+          <input type="text" name="new-client-name" v-model="newClient.name" placeholder="Client's name">
+          <input type="text" name="new-client-email" v-model="newClient.email" placeholder="Client's email">
         </div>
+
         <div class="md-new-client-actions">
-          <button class="md-new-client-cancel-btn btn red lighten-2"
+          <button class="md-new-client-cancel-btn btn"
                   type="button"
                   name="new-client-cancel-btn"
-                  @click="closeNewClient ()">
+                  @click="closeNewClientArea ()">
                   Cancel
           </button>
           <button class="md-new-client-submit-btn btn"
                   type="submit"
                   name="new-client-submit-btn"
-                  @click="postNewClient ()">
-                  Save Client
+                  @click="postNewClient (); getAllClients()">
+                  Save client
           </button>
         </div>
       </article>
@@ -52,98 +61,95 @@
     name: 'Budget',
     data () {
       return {
-        clientList: '',
-        clients: [],
-        totalPrice: '',
-        isHidden: true,
-        isVisible: false,
-        budgetList: {
-          budgets: []
-        }
+        clients: '',
+        clientList: [],
+        budgets: [],
+        newClient: {
+          name: '',
+          email: ''
+        },
+        isBudgetHidden: true,
+        isBudgetVisible: false,
+        isNewClientHidden: true,
+        isNewClientVisible: false
       }
     },
     watch: {
-      'clientList': function (value) {
+      'clients': function (value) {
         if (value === 'new-client') {
-          this.isHidden = !this.isHidden
-          this.isVisible = !this.isVisible
+          this.isNewClientHidden = !this.isNewClientHidden
+          this.isNewClientVisible = !this.isNewClientVisible
         } else {
-          this.isHidden = true
-          this.isVisible = false
+          this.isNewClientHidden = true
+          this.isNewClientVisible = false
         }
       }
     },
+    created: function () {
+      this.createNewBudget()
+    },
     mounted: function () {
       this.getAllClients()
+      setInterval(() => {
+        this.calcTotal()
+      }, 1000)
     },
     methods: {
-      getBudgets () {
-        Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
+      getAllClients: function () {
+        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
           for (let i in res.data) {
-            let budgets = this.budgetList.budgets
-            budgets.push(res.data[i])
+            let clientList = this.clientList
+            clientList.push(res.data[i])
           }
         })
       },
-
-      // postNewClient () {
-      //   Axios.post(`${urlPrefix}/api/clients`, {
-      //     client_name: this.newClient.name,
-      //     client_email: this.newClient.email
-      //   }).then((res) => {
-      //     console.log(res)
-      //   }).catch((error) => {
-      //     console.log(error)
-      //   })
-      // },
-      // postNewClientBudget () {
-      //   Axios.post(`${urlPrefix}/api/budgets`, {})
-      // }
-
-      createNewClientBudget () {
-        let budgets = this.budgetList.budgets
-        let clientBudget = {
+      createNewBudget: function () {
+        let budgets = this.budgets
+        let budget = {
           client: '',
           description: '',
           state: '',
           title: '',
-          items: [
-            {
-              itemTitle: '',
-              itemQuantity: 0,
-              itemPrice: 0,
-              itemSubtotal: 0
-            }
-          ]
+          totalPrice: 0,
+          items: []
         }
-        budgets.push(clientBudget)
+        budgets.push(budget)
       },
-
-      postNewBudget () {
-        Axios.post(`${urlPrefix}/api/budgets`, {
-          client: this.budgetList.budgets.client,
-          state: this.budgetList.budgets.state,
-          title: this.budgetList.budgets.title,
-          items: this.budgetList.budgets.items
+      createNewBudgetItem: function () {
+        let budgets = this.budgets[0].items
+        let item = {
+          itemTitle: '',
+          itemQuantity: null,
+          itemPrice: null,
+          itemSubtotal: 0
+        }
+        budgets.push(item)
+      },
+      closeNewClientArea: function () {
+        this.isNewClientHidden = !this.isNewClientHidden
+        this.isNewClientVisible = !this.isNewClientVisible
+      },
+      newBudgetArea: function () {
+        this.isBudgetHidden = false
+        this.isBudgetVisible = true
+      },
+      postNewClient: function () {
+        Axios.post(`${urlPrefix}/api/clients`, {
+          client_name: this.newClient.name,
+          client_email: this.newClient.email
         }).then((res) => {
           console.log(res)
         }).catch((error) => {
           console.log(error)
         })
       },
-
-      getAllClients () {
-        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
-          for (let i in res.data) {
-            let clients = this.clients
-            clients.push(res.data[i])
-          }
-        })
-      },
-
-      closeNewClient () {
-        this.isHidden = !this.isHidden
-        this.isVisible = !this.isVisible
+      calcTotal: function () {
+        let budgets = this.budgets[0].items
+        let total = 0
+        for (let i in budgets) {
+          total += budgets[i].itemSubtotal
+          this.budgets[0].totalPrice = total
+        }
       }
     }
   }
@@ -160,31 +166,38 @@
   .layout-new-budget-area {
     background-color: $secondary-color;
     padding-bottom: 60px;
+    position: relative;
+  }
+
+  input[type=text] {
+    // margin: 0 15px;
+    height: 35px;
+    border: 1px solid #9e9e9e;
+    padding: 0 15px;
+    color: $primary-color;
+
+    &:focus {
+      border: 1px solid #26a69a;
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      margin: 15px 0;
+      padding: 0;
+    }
   }
 
   .layout-new-client-area {
     background-color: $secondary-color;
     margin: 30px 0;
     padding: 30px 0;
+    position: relative;
 
-    input[type=text] {
-      margin: 0 15px;
-      height: 35px;
-      border: 1px solid #9e9e9e;
-      padding: 0 15px;
-      color: $primary-color;
-
-      &:focus {
-        border: 1px solid #26a69a;
-      }
-
-      @media (max-width: 600px) {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-        margin: 15px 0;
-        padding: 0;
-      }
+    .md-title {
+      margin-top: 0;
+      padding-top: 0;
     }
   }
 
@@ -218,11 +231,15 @@
     font-size: 22px;
     padding-top: 30px;
     padding-bottom: 30px;
+    margin: 15px 15px 0;
   }
 
   .md-new-budget {
     padding: 0 15px;
+    margin-top: 30px;
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
     @media (max-width: 600px) {
       flex-direction: column;
@@ -231,12 +248,27 @@
 
   .md-new-budget-btn {
     font-size: 26px;
+    background-color: #2196f3;
+
+    &:hover {
+      background-color: #64b5f6;
+    }
+
+    &:focus, &:active {
+      background-color: #1e88e5;
+    }
+  }
+
+  .layout-create-new {
+    display: flex;
+    justify-content: center;
   }
 
   .md-select-client {
     margin: 0 15px;
     height: 35px;
     width: 50%;
+    flex: 1 0 25%;
 
     @media (max-width: 600px) {
       margin: 15px 0;
@@ -249,6 +281,7 @@
     width: 100%;
     padding: 5px 15px;
     color: $primary-color;
+    flex: 1 0 50%;
   }
 
   .md-budget-total {
@@ -275,6 +308,9 @@
     transition: .3s ease;
     opacity: 0;
     transform: translateY(-60px);
+    position: absolute;
+    z-index: -1;
+    width: 100%;
   }
 
   .is-area-visible {

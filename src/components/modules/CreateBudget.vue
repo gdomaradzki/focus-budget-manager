@@ -1,15 +1,15 @@
 <template>
   <div class="layout-create-new-budget-item">
-    <div class="md-create-new-budget-item" v-for="item of budgetItems.budgets">
-      <button class="md-delete-budget-item-btn btn red lighten-2"
+    <div class="md-create-new-budget-item" v-for="item of budgetItems">
+      <button class="md-delete-budget-item-btn btn"
               type="button"
-              @click="test ()">
+              @click="deleteBudgetItem(item)">
               -
       </button>
-      <input class="md-budget-item-title" v-model="item.itemTitle" name="budget-item-title" type="text" placeholder="Budget Item Title">
-      <input class="md-budget-item-quantity" v-model="item.itemQuantity" name="budget-item-qt" type="text" placeholder="0">
-      <input class="md-budget-item-price" v-model="item.itemPrice" name="budget-item-price" type="text" placeholder="00.00">
-      <span class="md-budget-item-subtotal">$ {{ item.items[0].itemSubtotal }}</span>
+      <input class="md-budget-item-title" type="text" placeholder="Budget Item Title" v-model="item.itemTitle">
+      <input class="md-budget-item-quantity" type="text" placeholder="Qty" v-model="item.itemQuantity">
+      <input class="md-budget-item-price" type="text" placeholder="Price" v-model="item.itemPrice">
+      <span class="md-budget-item-subtotal">$ {{ item.itemSubtotal }} </span>
     </div>
   </div>
 </template>
@@ -17,41 +17,29 @@
 <script>
   export default {
     name: 'CreateBudget',
-    props: ['budgetItems', 'budgetItemDeletion'],
+    props: ['budgetItems'],
     data () {
       return {}
     },
-    watch: {
-      // 'budgetItems': function () {
-      //   let budgets = this.budgetItems
-      //   for (let i in budgets) {
-      //     let quantity = budgets[i].items[i].itemQuantity
-      //     let price = budgets[i].items[i].itemPrice
-      //     let subtotal = quantity * price
-      //     budgets[i].items[i].itemSubtotal = subtotal
-      //     console.log(budgets[i].items[i].itemSubtotal)
-      //   }
-      // }
-    },
     mounted: function () {
-      // setInterval(() => {
-      //   console.log(this.budgetItems.budgets)
-      // }, 1000)
+      setInterval(() => {
+        this.subtotalCalc()
+      }, 1000)
+    },
+    methods: {
+      subtotalCalc: function () {
+        let items = this.budgetItems
+        for (let i in items) {
+          let quantity = items[i].itemQuantity
+          let price = items[i].itemPrice
+          let subtotal = quantity * price
+          items[i].itemSubtotal = subtotal
+        }
+      },
+      deleteBudgetItem: function (item) {
+        this.budgetItems.splice(item, 1)
+      }
     }
-    // watch: {
-    //   'item.itemSubtotal'
-    // },
-    // watch: {
-    //   'clientList': function (value) {
-    //     if (value === 'new-client') {
-    //       this.isHidden = !this.isHidden
-    //       this.isVisible = !this.isVisible
-    //     } else {
-    //       this.isHidden = true
-    //       this.isVisible = false
-    //     }
-    //   }
-    // },
   }
 </script>
 
@@ -59,8 +47,12 @@
   $primary-color: #f1f1f1;
   $secondary-color: rgba(0, 0, 0, .5);
 
+  .layout-create-new-budget-item {
+    width: 100%;
+  }
+
   .md-create-new-budget-item {
-    margin: 30px 15px;
+    margin: 15px 0;
     display: flex;
     align-items: center;
 
@@ -102,7 +94,7 @@
 
     @media (max-width: 600px) {
       flex-direction: column;
-      margin: 60px 15px;
+      margin: 60px 0;
     }
   }
 
@@ -120,6 +112,15 @@
 
   .md-delete-budget-item-btn {
     font-size: 26px;
+    background-color: #ef5350 !important;
+
+    &:hover {
+      background-color: #e57373 !important;
+    }
+
+    &:active, &:focus {
+      background-color: #e53935 !important;
+    }
 
     @media (max-width: 600px) {
       width: 100%;

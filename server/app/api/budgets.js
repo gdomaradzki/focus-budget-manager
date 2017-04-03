@@ -8,13 +8,15 @@ let Budget = mongoose.model('Budgets');
 api.newBudget = (req, res) => {
   let budget = new Budget();
   budget.client = req.body.client;
+  budget.clientEmail = req.body.client_email;
   budget.state = req.body.state;
   budget.title = req.body.title;
+  budget.totalPrice = req.body.total_price;
   budget.items = req.body.items;
-  budget.items.item_title = req.body.items.item_title;
-  budget.items.item_quantity = req.body.items.item_quantity;
-  budget.items.item_price = req.body.items.item_price;
-  budget.items.item_subtotal = req.body.items.item_subtotal;
+  budget.items.itemTitle = req.body.items.item_title;
+  budget.items.itemQuantity = req.body.items.item_quantity;
+  budget.items.itemPrice = req.body.items.item_price;
+  budget.items.itemSubtotal = req.body.items.item_subtotal;
 
   budget.save(error => {
     if (error) {
