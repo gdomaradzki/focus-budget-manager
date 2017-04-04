@@ -16,7 +16,7 @@ api.newBudget = (req, res) => {
     if (error) {
       return res.send();
     }
-    res.json({ Message: 'Budget created' })
+    res.json({ message: 'Budget created' })
     console.log('Budget created');
   })
 }
@@ -28,6 +28,15 @@ api.getBudgets = (req, res) => {
     }
     res.status(200).json(budget);
     return true;
+  })
+}
+
+api.getOneBudget = (req, res) => {
+  Budgets.findOne({ client: req.params.client }, (error, budget) => {
+    if (error) {
+      res.send(error);
+    }
+    res.json(budget);
   })
 }
 

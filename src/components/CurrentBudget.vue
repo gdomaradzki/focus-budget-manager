@@ -4,17 +4,9 @@
       <section class="layout-new-budget-area">
         <h2 class="md-title">new budget</h2>
 
-        <div class="layout-create-new">
-          <button class="md-create-budget-btn btn" @click="newBudgetArea();">
-            Create New
-          </button>
-        </div>
-
-        <form class="md-new-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
+        <form class="md-new-budget">
           <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budgets[0].title">
-          <select name="new-budget-clients" class="md-select-client" required v-model="budgets[0].client" v-model="clients">
-            <option disabled hidden value="">Choose a Client</option>
-            <option value="new-client">New Client</option>
+          <select name="new-budget-clients" class="md-select-client" required>
             <option v-for="client of clientList"> {{ client.client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
@@ -32,29 +24,6 @@
           </button>
         </div>
       </section>
-
-      <article class="layout-new-client-area" :class="{ 'is-area-hidden': isNewClientHidden, 'is-area-visible': isNewClientVisible }">
-        <h5 class="md-title">register client</h5>
-        <div class="md-new-client-info">
-          <input type="text" name="new-client-name" v-model="newClient.name" placeholder="Client's name">
-          <input type="text" name="new-client-email" v-model="newClient.email" placeholder="Client's email">
-        </div>
-
-        <div class="md-new-client-actions">
-          <button class="md-new-client-cancel-btn btn"
-                  type="button"
-                  name="new-client-cancel-btn"
-                  @click="closeNewClientArea ()">
-                  Cancel
-          </button>
-          <button class="md-new-client-submit-btn btn"
-                  type="submit"
-                  name="new-client-submit-btn"
-                  @click="postNewClient ();">
-                  Save client
-          </button>
-        </div>
-      </article>
     </div>
   </div>
 </template>
@@ -66,58 +35,31 @@
     name: 'Budget',
     data () {
       return {
-        clients: '',
         clientList: [],
-        budgets: [],
-        newClient: {
-          name: '',
-          email: ''
-        },
-        isBudgetHidden: true,
-        isBudgetVisible: false,
-        isNewClientHidden: true,
-        isNewClientVisible: false
-      }
-    },
-    watch: {
-      'clients': function (value) {
-        if (value === 'new-client') {
-          this.isNewClientHidden = !this.isNewClientHidden
-          this.isNewClientVisible = !this.isNewClientVisible
-        } else {
-          this.isNewClientHidden = true
-          this.isNewClientVisible = false
-        }
+        budgets: []
       }
     },
     created: function () {
-      this.createNewBudget()
+      this.getClient()
+      this.getBudget()
     },
     mounted: function () {
-      this.getAllClients()
       setInterval(() => {
         this.calcTotal()
       }, 1000)
     },
     methods: {
-      getAllClients: function () {
-        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
-          for (let i in res.data) {
-            let clientList = this.clientList
-            clientList.push(res.data[i])
-          }
+      getBudget: function (params) {
+        Axios.get(`${urlPrefix}/api/budgets/` + this.$route.params.client).then((res) => {
+          let budgets = this.budgets
+          budgets.push(res.data)
         })
       },
-      createNewBudget: function () {
-        let budgets = this.budgets
-        let budget = {
-          client: '',
-          title: '',
-          state: '',
-          total_price: 0,
-          items: []
-        }
-        budgets.push(budget)
+      getClient: function (params) {
+        Axios.get(`${urlPrefix}/api/clients/` + this.$route.params.client).then((res) => {
+          let clients = this.clientList
+          clients.push(res.data)
+        })
       },
       createNewBudgetItem: function () {
         let budgets = this.budgets[0].items
@@ -129,35 +71,19 @@
         }
         budgets.push(item)
       },
-      closeNewClientArea: function () {
-        this.isNewClientHidden = !this.isNewClientHidden
-        this.isNewClientVisible = !this.isNewClientVisible
-      },
-      newBudgetArea: function () {
-        this.isBudgetHidden = false
-        this.isBudgetVisible = true
-      },
-      postNewClient: function () {
-        Axios.post(`${urlPrefix}/api/clients`, {
-          client: this.newClient.name,
-          client_email: this.newClient.email
-        }).then((res) => {
-          console.log(res)
-        }).catch((error) => {
-          console.log(error)
-        })
-      },
-      postNewBudget: function () {
-        Axios.post(`${urlPrefix}/api/budgets`, {
-          client: this.budgets[0].client,
-          title: this.budgets[0].title,
-          total_price: this.budgets[0].total_price,
-          items: this.budgets[0].items
-        }).then((res) => {
-          console.log(res)
-        }).catch((error) => {
-          console.log(error)
-        })
+      // postNewBudget: function () {
+      //   Axios.post(`${urlPrefix}/api/budgets`, {
+      //     client: this.budgets[0].client,
+      //     title: this.budgets[0].title,
+      //     total_price: this.budgets[0].total_price,
+      //     items: this.budgets[0].items
+      //   }).then((res) => {
+      //     console.log(res)
+      //   }).catch((error) => {
+      //     console.log(error)
+      //   })
+      // },
+      updateBudget: function () {
       },
       calcTotal: function () {
         let budgets = this.budgets[0].items

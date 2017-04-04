@@ -21,26 +21,7 @@ var schema = mongoose.Schema({
     required: true
   },
 
-  items: [
-    {
-      item_title: {
-        type: String,
-      },
-
-      item_quantity: {
-        type: Number,
-      },
-
-      item_price: {
-        type: Number,
-      },
-
-      item_subtotal: {
-        type: Number,
-      }
-    }
-  ]
-
+  items: [{}]
 
 }, { collection: 'budgets' });
 

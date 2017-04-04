@@ -21,7 +21,7 @@
           {
             id: '1',
             name: 'New',
-            routePath: '/novo/orcamento'
+            routePath: '/new/budget'
           },
           {
             name: 'List',

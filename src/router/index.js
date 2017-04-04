@@ -2,17 +2,18 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Import Components
-import Header from '../components/root/Header'
-import Logo from '../components/modules/Logo'
-import Dropdown from '../components/modules/Dropdown'
-import DropdownArrow from '../components/modules/DropdownArrow'
-import SearchInput from '../components/modules/SearchInput'
-import BudgetList from '../components/modules/BudgetList'
-import CreateBudget from '../components/modules/CreateBudget'
+import Header from '@/components/root/Header'
+import Logo from '@/components/modules/Logo'
+import Dropdown from '@/components/modules/Dropdown'
+import DropdownArrow from '@/components/modules/DropdownArrow'
+import SearchInput from '@/components/modules/SearchInput'
+import BudgetList from '@/components/modules/BudgetList'
+import CreateBudget from '@/components/modules/CreateBudget'
 
 // Import Page Components
 import Home from '@/components/Home'
 import Budget from '@/components/Budget'
+import CurrentBudget from '@/components/CurrentBudget'
 
 Vue.use(Router)
 
@@ -36,9 +37,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/novo/orcamento',
+      path: '/new/budget',
       name: 'Budget',
       component: Budget
+    },
+    {
+      path: '/edit/budget/:client',
+      name: 'CurrentBudget',
+      component: CurrentBudget
     }
   ]
 })

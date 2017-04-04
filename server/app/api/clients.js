@@ -7,7 +7,7 @@ let Clients = mongoose.model('Clients');
 
 api.newClient = (req, res) => {
   let client = new Clients();
-  client.client_name = req.body.client_name;
+  client.client = req.body.client;
   client.client_email = req.body.client_email;
 
   client.save(error => {
@@ -26,6 +26,15 @@ api.getClients = (req, res) => {
     }
     res.status(200).json(client);
     return true;
+  })
+}
+
+api.getOneClient = (req, res) => {
+  Clients.findOne({ client: req.params.client }, (error, client) => {
+    if (error) {
+      res.send(error);
+    }
+    res.json(client);
   })
 }
 
