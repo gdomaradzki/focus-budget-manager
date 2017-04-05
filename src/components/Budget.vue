@@ -27,9 +27,12 @@
           $ {{ budgets[0].total_price }}
         </h4>
         <div class="layout-send-budget">
-          <button class="md-send-budget-btn btn" @click="postNewBudget()">
-            send
-          </button>
+          <router-link class="md-return-btn btn" to="/">return</router-link>
+          <router-link to="/">
+            <button class="md-send-budget-btn btn" @click="postNewBudget()">
+              send
+            </button>
+          </router-link>
         </div>
       </section>
 
@@ -50,7 +53,7 @@
           <button class="md-new-client-submit-btn btn"
                   type="submit"
                   name="new-client-submit-btn"
-                  @click="postNewClient ();">
+                  @click="postNewClient (); closeNewClientArea ()">
                   Save client
           </button>
         </div>
@@ -188,7 +191,19 @@
   .layout-send-budget {
     margin: 15px 15px 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+
+    .md-return-btn {
+      background-color: darken(#f1e46e, 10%);;
+
+      &:hover {
+        background-color: #f1e46e;
+      }
+
+      &:focus, &:active {
+        background-color: darken(#f1e46e, 20%);
+      }
+    }
   }
 
   input[type=text] {

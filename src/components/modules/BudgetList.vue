@@ -32,9 +32,6 @@
       }
     },
     props: ['budgets', 'clients'],
-    mounted: function () {
-      console.log(this.client)
-    },
     methods: {
       deleteBudget: function (budget) {
         Axios.delete(`${urlPrefix}/api/budgets/` + budget._id, {

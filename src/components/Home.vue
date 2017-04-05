@@ -16,10 +16,18 @@
   const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'Home',
+    twoWay: true,
+    deep: true,
     data () {
       return {
         budgets: [],
         clients: []
+      }
+    },
+    watch: {
+      budgets: {
+        handler: function (value, oldValue) { console.log('new: %s, old: %s', value, oldValue) },
+        deep: true
       }
     },
     created: function () {

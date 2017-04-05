@@ -19,9 +19,12 @@
           $ {{ budgets[0].total_price }}
         </h4>
         <div class="layout-send-budget">
-          <button class="md-send-budget-btn btn" @click="updateBudget()">
-            update
-          </button>
+          <router-link class="md-return-btn btn" to="/">return</router-link>
+          <router-link to="/">
+            <button class="md-send-budget-btn btn" @click="updateBudget()">
+              update
+            </button>
+          </router-link>
         </div>
       </section>
     </div>
@@ -113,6 +116,18 @@
     margin: 15px 15px 0;
     display: flex;
     justify-content: flex-end;
+
+    .md-return-btn {
+      background-color: darken(#f1e46e, 10%);;
+
+      &:hover {
+        background-color: #f1e46e;
+      }
+
+      &:focus, &:active {
+        background-color: darken(#f1e46e, 20%);
+      }
+    }
   }
 
   input[type=text] {
