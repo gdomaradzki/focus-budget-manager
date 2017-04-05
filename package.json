@@ -1,7 +1,7 @@
 {
   "name": "focus-gestor-orcamentos",
   "version": "1.0.0",
-  "description": "Gestor de orçamentos",
+  "description": "Budget Manager",
   "author": "Gustavo Domaradzki <gutzedomaradzki@gmail.com>",
   "private": true,
   "scripts": {
@@ -17,7 +17,6 @@
     "express": "^4.15.2",
     "jquery": "2.1.1",
     "materialize-css": "^0.98.1",
-    "socket.io": "^1.7.3",
     "vue": "^2.2.2",
     "vue-router": "^2.2.0"
   },
