@@ -4,7 +4,7 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">Budget Manager</h1>
-          <layout-budget-list :budgets="budgets" :clients="clients"></layout-budget-list>
+          <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></layout-budget-list>
         </section>
       </main>
     </div>
@@ -14,7 +14,7 @@
 <script>
   export default {
     name: 'Home',
-    props: ['budgets', 'clients']
+    props: ['budgets', 'clients', 'getBudgets']
   }
 </script>
 

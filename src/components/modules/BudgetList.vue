@@ -36,13 +36,14 @@
         client: ''
       }
     },
-    props: ['budgets', 'clients'],
+    props: ['budgets', 'clients', 'getBudgets'],
     methods: {
       deleteBudget: function (budget) {
         Axios.delete(`${urlPrefix}/api/budgets/` + budget._id, {
           _id: budget._id
         }).then((res) => {
           console.log(res)
+          this.getBudgets()
         }).catch((error) => {
           console.log(error)
         })
@@ -82,6 +83,10 @@
 
       .md-budget-description {
         display: none;
+      }
+
+      .md-budget-state {
+        text-transform: capitalize;
       }
 
       .md-budget-action {

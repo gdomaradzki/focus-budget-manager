@@ -18,9 +18,6 @@
   export default {
     name: 'CreateBudget',
     props: ['budgetItems'],
-    data () {
-      return {}
-    },
     mounted: function () {
       setInterval(() => {
         this.subtotalCalc()

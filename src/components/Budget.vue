@@ -3,22 +3,19 @@
     <div class="col s12">
       <section class="layout-new-budget-area">
         <h2 class="md-title">new budget</h2>
-
-        <div class="layout-create-new">
-          <button class="md-create-budget-btn btn" @click="newBudgetArea();">
-            Create New
-          </button>
-        </div>
-
-        <form class="md-new-budget" v-for="budget of newBudget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
+        <h3 class="md-hint">status</h3>
+        <form class="md-new-budget" v-for="budget of newBudget">
+          <select class="md-select-status btn" name="new-budget-status" required v-model="budget.state">
+            <option value="writing">writing</option>
+          </select>
           <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budget.title">
-          <select name="new-budget-clients" class="md-select-client" required v-model="budget.client" v-model="clients">
+          <select class="md-select-client" name="new-budget-clients" required v-model="budget.client" v-model="clients">
             <option disabled hidden value="">Choose a Client</option>
             <option value="new-client">New Client</option>
             <option v-for="client of clientList"> {{ client.client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
-          <md-create-new-budget-item v-for="item of budget.items"
+          <md-create-new-budget-item v-for="item of newBudget"
                                      :budgetItems="budget.items">
           </md-create-new-budget-item>
           <h4 class="md-budget-total">
@@ -76,8 +73,6 @@
           name: '',
           email: ''
         },
-        isBudgetHidden: true,
-        isBudgetVisible: false,
         isNewClientHidden: true,
         isNewClientVisible: false
       }
@@ -101,6 +96,7 @@
       this.getAllClients()
       setInterval(() => {
         this.calcTotal()
+        console.log(this.newBudget[0])
       }, 1000)
     },
     methods: {
@@ -138,10 +134,6 @@
         this.isNewClientHidden = !this.isNewClientHidden
         this.isNewClientVisible = !this.isNewClientVisible
       },
-      newBudgetArea: function () {
-        this.isBudgetHidden = false
-        this.isBudgetVisible = true
-      },
       postNewClient: function () {
         Axios.post(`${urlPrefix}/api/clients`, {
           client: this.newClient.name,
@@ -156,6 +148,7 @@
       postNewBudget: function () {
         Axios.post(`${urlPrefix}/api/budgets`, {
           client: this.newBudget[0].client,
+          state: this.newBudget[0].state,
           title: this.newBudget[0].title,
           total_price: this.newBudget[0].total_price,
           items: this.newBudget[0].items
@@ -278,6 +271,15 @@
     margin: 15px 15px 0;
   }
 
+  .md-hint {
+    color: $primary-color;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin: 0 15px;
+    transform: translateY(20px);
+    display: inline-block;
+  }
+
   .md-new-budget {
     padding: 0 15px;
     margin-top: 30px;
@@ -308,6 +310,27 @@
     justify-content: center;
   }
 
+  .md-select-status {
+    flex: 1 0 10%;
+    height: 35px;
+    text-transform: uppercase;
+    padding: 0;
+    color: $primary-color;
+
+    & option {
+      &:first-of-type {
+        background-color: #2196f3;
+        &:hover {
+          background-color: #64b5f6;
+        }
+
+        &:focus, &:active {
+          background-color: #1e88e5;
+        }
+      }
+    }
+  }
+
   .md-select-client {
     margin: 0 15px;
     height: 35px;
@@ -325,7 +348,12 @@
     width: 100%;
     padding: 5px 15px;
     color: $primary-color;
-    flex: 1 0 50%;
+    flex: 1 0 40%;
+    margin-left: 15px;
+
+    @media (max-width: 800px) {
+      flex: 1 0 30%;
+    }
   }
 
   .md-budget-total {

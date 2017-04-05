@@ -8,7 +8,7 @@ var schema = mongoose.Schema({
 
   state: {
     type: String,
-    required: false
+    required: true
   },
 
   title: {

@@ -8,6 +8,7 @@ let Budgets = mongoose.model('Budgets');
 api.newBudget = (req, res) => {
   let budget = new Budgets();
   budget.client = req.body.client;
+  budget.state = req.body.state;
   budget.title = req.body.title;
   budget.total_price = req.body.total_price;
   budget.items = req.body.items;

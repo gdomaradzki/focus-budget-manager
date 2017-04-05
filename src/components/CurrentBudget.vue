@@ -5,6 +5,13 @@
         <h2 class="md-title">new budget</h2>
 
         <form class="md-new-budget" v-for="budget of budgets">
+          <select class="md-select-status btn" name="new-budget-status" required v-model="budget.state">
+            <option value="writing">writing</option>
+            <option value="denied">denied</option>
+            <option value="approved">approved</option>
+            <option value="waiting">waiting</option>
+            <option value="editing">editing</option>
+          </select>
           <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budget.title">
           <select name="new-budget-clients" class="md-select-client" required>
             <option> {{ budget.client }} </option>
@@ -36,6 +43,7 @@
   const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'CurrentBudget',
+    props: ['getBudgets'],
     data () {
       return {
         budgets: [],
@@ -77,10 +85,12 @@
         Axios.put(`${urlPrefix}/api/budgets/` + this.$route.params.budget, {
           client: this.budgets[0].client,
           title: this.budgets[0].title,
+          state: this.budgets[0].state,
           total_price: this.budgets[0].total_price,
           items: this.budgets[0].items
         }).then((res) => {
           console.log(res)
+          this.getBudgets()
         }).catch((error) => {
           console.log(error)
         })
@@ -227,6 +237,27 @@
     justify-content: center;
   }
 
+  .md-select-status {
+    flex: 1 0 10%;
+    height: 35px;
+    text-transform: uppercase;
+    padding: 0;
+    color: $primary-color;
+
+    & option {
+      &:first-of-type {
+        background-color: #2196f3;
+        &:hover {
+          background-color: #64b5f6;
+        }
+
+        &:focus, &:active {
+          background-color: #1e88e5;
+        }
+      }
+    }
+  }
+
   .md-select-client {
     margin: 0 15px;
     height: 35px;
@@ -244,7 +275,12 @@
     width: 100%;
     padding: 5px 15px;
     color: $primary-color;
-    flex: 1 0 50%;
+    flex: 1 0 40%;
+    margin-left: 15px;
+
+    @media (max-width: 800px) {
+      flex: 1 0 30%;
+    }
   }
 
   .md-budget-total {
