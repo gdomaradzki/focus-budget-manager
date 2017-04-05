@@ -2,14 +2,45 @@
   <div id="app">
     <div class="container">
       <layout-header></layout-header>
-      <router-view></router-view>
+      <router-view :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></router-view>
     </div>
   </div>
 </template>
 
 <script>
+  import Axios from 'axios'
+  const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
-    name: 'app'
+    name: 'app',
+    data () {
+      return {
+        budgets: [],
+        clients: []
+      }
+    },
+    created: function () {
+      this.getBudgets()
+      this.getClients()
+    },
+    methods: {
+      getBudgets () {
+        Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
+          this.budgets = []
+          for (let i in res.data) {
+            let budgets = this.budgets
+            budgets.push(res.data[i])
+          }
+        })
+      },
+      getClients: function () {
+        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
+          for (let i in res.data) {
+            let clients = this.clients
+            clients.push(res.data[i])
+          }
+        })
+      }
+    }
   }
 </script>
 

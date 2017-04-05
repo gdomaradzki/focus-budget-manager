@@ -11,20 +11,20 @@
         </div>
 
         <form class="md-new-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
-          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budgets[0].title">
-          <select name="new-budget-clients" class="md-select-client" required v-model="budgets[0].client" v-model="clients">
+          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="newBudget[0].title">
+          <select name="new-budget-clients" class="md-select-client" required v-model="newBudget[0].client" v-model="clients">
             <option disabled hidden value="">Choose a Client</option>
             <option value="new-client">New Client</option>
             <option v-for="client of clientList"> {{ client.client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
-          <md-create-new-budget-item v-for="item of budgets"
-                                     :budgetItems="budgets[0].items">
+          <md-create-new-budget-item v-for="item of newBudget[0].items"
+                                     :budgetItems="newBudget[0].items">
           </md-create-new-budget-item>
         </form>
         <h4 class="md-budget-total">
           <span class="md-budget-total-bold">total</span>
-          $ {{ budgets[0].total_price }}
+          $ {{ newBudget[0].total_price }}
         </h4>
         <div class="layout-send-budget">
           <router-link class="md-return-btn btn" to="/">return</router-link>
@@ -71,7 +71,7 @@
       return {
         clients: '',
         clientList: [],
-        budgets: [],
+        newBudget: [],
         newClient: {
           name: '',
           email: ''
@@ -82,6 +82,7 @@
         isNewClientVisible: false
       }
     },
+    props: ['budgets', 'getBudgets'],
     watch: {
       'clients': function (value) {
         if (value === 'new-client') {
@@ -101,6 +102,7 @@
       setInterval(() => {
         this.calcTotal()
       }, 1000)
+      console.log(this.newBudget)
     },
     methods: {
       getAllClients: function () {
@@ -113,7 +115,7 @@
         })
       },
       createNewBudget: function () {
-        let budgets = this.budgets
+        let budgets = this.newBudget
         let budget = {
           client: '',
           title: '',
@@ -124,7 +126,7 @@
         budgets.push(budget)
       },
       createNewBudgetItem: function () {
-        let budgets = this.budgets[0].items
+        let budgets = this.newBudget[0].items
         let item = {
           itemTitle: '',
           itemQuantity: null,
@@ -154,22 +156,23 @@
       },
       postNewBudget: function () {
         Axios.post(`${urlPrefix}/api/budgets`, {
-          client: this.budgets[0].client,
-          title: this.budgets[0].title,
-          total_price: this.budgets[0].total_price,
-          items: this.budgets[0].items
+          client: this.newBudget[0].client,
+          title: this.newBudget[0].title,
+          total_price: this.newBudget[0].total_price,
+          items: this.newBudget[0].items
         }).then((res) => {
           console.log(res)
+          this.getBudgets()
         }).catch((error) => {
           console.log(error)
         })
       },
       calcTotal: function () {
-        let budgets = this.budgets[0].items
+        let budgets = this.newBudget[0].items
         let total = 0
         for (let i in budgets) {
           total += budgets[i].itemSubtotal
-          this.budgets[0].total_price = total
+          this.newBudget[0].total_price = total
         }
       }
     }
