@@ -6,6 +6,10 @@
           <h1 class="md-title">Budget Manager</h1>
           <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></layout-budget-list>
         </section>
+
+        <article class="layout-view-selected-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
+          <h1>teste</h1>
+        </article>
       </main>
     </div>
   </div>
@@ -22,10 +26,6 @@
   $primary-color: #f1f1f1;
   $secondary-color: rgba(0, 0, 0, .5);
 
-  main {
-    background-color: $secondary-color;
-  }
-
   .md-title {
     color: $primary-color;
     text-align: center;
@@ -36,7 +36,23 @@
   }
 
   .layout-budget-area {
-    margin: 0 15px;
-    padding-bottom: 60px;
+    padding: 0 15px 60px;
+    background-color: $secondary-color;
+  }
+
+  .layout-view-selected-budget {
+    background-color: $secondary-color;
+    margin: 30px 0;
+    padding: 30px 15px;
+    position: relative;
+
+    .md-title {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    input[type=text] {
+      margin: 0 15px;
+    }
   }
 </style>

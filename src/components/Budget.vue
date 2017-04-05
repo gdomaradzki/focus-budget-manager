@@ -316,19 +316,6 @@
     text-transform: uppercase;
     padding: 0;
     color: $primary-color;
-
-    & option {
-      &:first-of-type {
-        background-color: #2196f3;
-        &:hover {
-          background-color: #64b5f6;
-        }
-
-        &:focus, &:active {
-          background-color: #1e88e5;
-        }
-      }
-    }
   }
 
   .md-select-client {

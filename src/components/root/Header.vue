@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col s12">
       <header class="layout-main-header">
-        <md-logo></md-logo>
+        <router-link to="/">
+          <md-logo></md-logo>
+        </router-link>
         <div class="md-flex-disperser"></div>
         <md-search-input></md-search-input>
         <md-dropdown-nav dropdownName="Budget" :links="budget" :button="1"></md-dropdown-nav>

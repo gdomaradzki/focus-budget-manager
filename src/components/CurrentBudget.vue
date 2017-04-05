@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s12">
       <section class="layout-new-budget-area">
-        <h2 class="md-title">new budget</h2>
+        <h2 class="md-title">update budget</h2>
 
         <form class="md-new-budget" v-for="budget of budgets">
           <select class="md-select-status btn" name="new-budget-status" required v-model="budget.state">
@@ -243,19 +243,6 @@
     text-transform: uppercase;
     padding: 0;
     color: $primary-color;
-
-    & option {
-      &:first-of-type {
-        background-color: #2196f3;
-        &:hover {
-          background-color: #64b5f6;
-        }
-
-        &:focus, &:active {
-          background-color: #1e88e5;
-        }
-      }
-    }
   }
 
   .md-select-client {
