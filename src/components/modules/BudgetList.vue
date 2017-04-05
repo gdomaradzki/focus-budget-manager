@@ -10,10 +10,10 @@
             <button type="button" class="md-action-btn btn">View</button>
           </li>
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn">Edit</button>
+            <router-link class="md-action-btn btn" :to="{ path: '/edit/' + budget.client + '/' + budget._id }">Edit</router-link>
           </li>
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn">Delete</button>
+            <button type="button" class="md-action-btn btn" @click="deleteBudget(budget)">Delete</button>
           </li>
         </ul>
       </div>
@@ -22,9 +22,30 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+  const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'BudgetList',
-    props: ['budgets']
+    data () {
+      return {
+        client: ''
+      }
+    },
+    props: ['budgets', 'clients'],
+    mounted: function () {
+      console.log(this.client)
+    },
+    methods: {
+      deleteBudget: function (budget) {
+        Axios.delete(`${urlPrefix}/api/budgets/` + budget._id, {
+          _id: budget._id
+        }).then((res) => {
+          console.log(res)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    }
   }
 </script>
 

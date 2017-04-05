@@ -7,7 +7,7 @@
         <form class="md-new-budget">
           <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budgets[0].title">
           <select name="new-budget-clients" class="md-select-client" required>
-            <option v-for="client of clientList"> {{ client.client }} </option>
+            <option> {{ budgets[0].client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
           <md-create-new-budget-item v-for="item of budgets"
@@ -19,8 +19,8 @@
           $ {{ budgets[0].total_price }}
         </h4>
         <div class="layout-send-budget">
-          <button class="md-send-budget-btn btn" @click="postNewBudget()">
-            send
+          <button class="md-send-budget-btn btn" @click="updateBudget()">
+            update
           </button>
         </div>
       </section>
@@ -32,11 +32,11 @@
   import Axios from 'axios'
   const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
-    name: 'Budget',
+    name: 'CurrentBudget',
     data () {
       return {
-        clientList: [],
-        budgets: []
+        budgets: [],
+        clientList: []
       }
     },
     created: function () {
@@ -46,11 +46,11 @@
     mounted: function () {
       setInterval(() => {
         this.calcTotal()
-      }, 1000)
+      }, 500)
     },
     methods: {
       getBudget: function (params) {
-        Axios.get(`${urlPrefix}/api/budgets/` + this.$route.params.client).then((res) => {
+        Axios.get(`${urlPrefix}/api/budgets/` + this.$route.params.budget).then((res) => {
           let budgets = this.budgets
           budgets.push(res.data)
         })
@@ -71,19 +71,17 @@
         }
         budgets.push(item)
       },
-      // postNewBudget: function () {
-      //   Axios.post(`${urlPrefix}/api/budgets`, {
-      //     client: this.budgets[0].client,
-      //     title: this.budgets[0].title,
-      //     total_price: this.budgets[0].total_price,
-      //     items: this.budgets[0].items
-      //   }).then((res) => {
-      //     console.log(res)
-      //   }).catch((error) => {
-      //     console.log(error)
-      //   })
-      // },
       updateBudget: function () {
+        Axios.put(`${urlPrefix}/api/budgets/` + this.$route.params.budget, {
+          client: this.budgets[0].client,
+          title: this.budgets[0].title,
+          total_price: this.budgets[0].total_price,
+          items: this.budgets[0].items
+        }).then((res) => {
+          console.log(res)
+        }).catch((error) => {
+          console.log(error)
+        })
       },
       calcTotal: function () {
         let budgets = this.budgets[0].items

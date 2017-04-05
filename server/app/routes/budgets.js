@@ -5,6 +5,8 @@ module.exports = (app) => {
      .post(api.newBudget)
      .get(api.getBudgets);
 
-  app.route('/api/budgets/:client')
+  app.route('/api/budgets/:_id')
+     .delete(api.deleteBudget)
+     .put(api.putOneBudget)
      .get(api.getOneBudget);
 }

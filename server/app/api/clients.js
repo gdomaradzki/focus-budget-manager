@@ -30,9 +30,9 @@ api.getClients = (req, res) => {
 }
 
 api.getOneClient = (req, res) => {
-  Clients.findOne({ client: req.params.client }, (error, client) => {
+  Clients.findOne({ _id: req.params._id }, (error, client) => {
     if (error) {
-      res.send(error);
+      return res.send();
     }
     res.json(client);
   })

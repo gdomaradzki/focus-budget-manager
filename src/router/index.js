@@ -42,7 +42,7 @@ export default new Router({
       component: Budget
     },
     {
-      path: '/edit/budget/:client',
+      path: '/edit/:client/:budget',
       name: 'CurrentBudget',
       component: CurrentBudget
     }

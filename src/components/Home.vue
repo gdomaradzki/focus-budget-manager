@@ -4,7 +4,7 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">Budget Manager</h1>
-          <layout-budget-list :budgets="budgetList.budgets"></layout-budget-list>
+          <layout-budget-list :budgets="budgets" :clients="clients"></layout-budget-list>
         </section>
       </main>
     </div>
@@ -18,22 +18,28 @@
     name: 'Home',
     data () {
       return {
-        budgetList: {
-          budgets: []
-        }
+        budgets: [],
+        clients: []
       }
     },
-
-    mounted: function () {
+    created: function () {
+      this.getBudgets()
       this.getClients()
     },
-
     methods: {
-      getClients () {
+      getBudgets () {
         Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
           for (let i in res.data) {
-            let budgets = this.budgetList.budgets
+            let budgets = this.budgets
             budgets.push(res.data[i])
+          }
+        })
+      },
+      getClients: function () {
+        Axios.get(`${urlPrefix}/api/clients`).then((res) => {
+          for (let i in res.data) {
+            let clients = this.clients
+            clients.push(res.data[i])
           }
         })
       }

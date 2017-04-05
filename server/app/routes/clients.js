@@ -5,6 +5,6 @@ module.exports = (app) => {
      .post(api.newClient)
      .get(api.getClients);
 
-  app.route('/api/clients/:client')
+  app.route('/api/clients/:_id')
      .get(api.getOneClient);
 }
