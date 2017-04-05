@@ -10,22 +10,22 @@
           </button>
         </div>
 
-        <form class="md-new-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
-          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="newBudget[0].title">
-          <select name="new-budget-clients" class="md-select-client" required v-model="newBudget[0].client" v-model="clients">
+        <form class="md-new-budget" v-for="budget of newBudget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
+          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budget.title">
+          <select name="new-budget-clients" class="md-select-client" required v-model="budget.client" v-model="clients">
             <option disabled hidden value="">Choose a Client</option>
             <option value="new-client">New Client</option>
             <option v-for="client of clientList"> {{ client.client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
-          <md-create-new-budget-item v-for="item of newBudget[0].items"
-                                     :budgetItems="newBudget[0].items">
+          <md-create-new-budget-item v-for="item of budget.items"
+                                     :budgetItems="budget.items">
           </md-create-new-budget-item>
+          <h4 class="md-budget-total">
+            <span class="md-budget-total-bold">total</span>
+            $ {{ budget.total_price }}
+          </h4>
         </form>
-        <h4 class="md-budget-total">
-          <span class="md-budget-total-bold">total</span>
-          $ {{ newBudget[0].total_price }}
-        </h4>
         <div class="layout-send-budget">
           <router-link class="md-return-btn btn" to="/">return</router-link>
           <router-link to="/">
@@ -102,7 +102,6 @@
       setInterval(() => {
         this.calcTotal()
       }, 1000)
-      console.log(this.newBudget)
     },
     methods: {
       getAllClients: function () {
@@ -336,6 +335,7 @@
     justify-content: flex-end;
     margin: 30px 15px;
     align-items: center;
+    width: 100%;
 
     .md-budget-total-bold {
       text-transform: uppercase;

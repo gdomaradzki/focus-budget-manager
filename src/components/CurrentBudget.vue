@@ -4,20 +4,20 @@
       <section class="layout-new-budget-area">
         <h2 class="md-title">new budget</h2>
 
-        <form class="md-new-budget">
-          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budgets[0].title">
+        <form class="md-new-budget" v-for="budget of budgets">
+          <input type="text" class="md-new-budget-description" name="new-budget-description" placeholder="Description" v-model="budget.title">
           <select name="new-budget-clients" class="md-select-client" required>
-            <option> {{ budgets[0].client }} </option>
+            <option> {{ budget.client }} </option>
           </select>
           <button class="md-new-budget-btn btn" type="button" @click="createNewBudgetItem()">+</button>
           <md-create-new-budget-item v-for="item of budgets"
-                                     :budgetItems="budgets[0].items">
+                                     :budgetItems="budget.items">
           </md-create-new-budget-item>
+          <h4 class="md-budget-total">
+            <span class="md-budget-total-bold">total</span>
+            $ {{ budget.total_price }}
+          </h4>
         </form>
-        <h4 class="md-budget-total">
-          <span class="md-budget-total-bold">total</span>
-          $ {{ budgets[0].total_price }}
-        </h4>
         <div class="layout-send-budget">
           <router-link class="md-return-btn btn" to="/">return</router-link>
           <router-link to="/">
@@ -42,9 +42,14 @@
         clientList: []
       }
     },
+    beforeCreate: function () {
+      Axios.get(`${urlPrefix}/api/budgets/` + this.$route.params.budget).then((res) => {
+        let budgets = this.budgets
+        budgets.push(res.data)
+      })
+    },
     created: function () {
       this.getClient()
-      this.getBudget()
     },
     mounted: function () {
       setInterval(() => {
@@ -52,13 +57,7 @@
       }, 500)
     },
     methods: {
-      getBudget: function (params) {
-        Axios.get(`${urlPrefix}/api/budgets/` + this.$route.params.budget).then((res) => {
-          let budgets = this.budgets
-          budgets.push(res.data)
-        })
-      },
-      getClient: function (params) {
+      getClient: function () {
         Axios.get(`${urlPrefix}/api/clients/` + this.$route.params.client).then((res) => {
           let clients = this.clientList
           clients.push(res.data)
@@ -115,7 +114,7 @@
   .layout-send-budget {
     margin: 15px 15px 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 
     .md-return-btn {
       background-color: darken(#f1e46e, 10%);;
@@ -255,6 +254,7 @@
     justify-content: flex-end;
     margin: 30px 15px;
     align-items: center;
+    width: 100%;
 
     .md-budget-total-bold {
       text-transform: uppercase;
