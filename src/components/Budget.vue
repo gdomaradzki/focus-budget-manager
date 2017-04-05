@@ -105,6 +105,7 @@
     methods: {
       getAllClients: function () {
         Axios.get(`${urlPrefix}/api/clients`).then((res) => {
+          this.clientList = []
           for (let i in res.data) {
             let clientList = this.clientList
             clientList.push(res.data[i])
@@ -146,6 +147,7 @@
           client_email: this.newClient.email
         }).then((res) => {
           console.log(res)
+          this.getAllClients()
         }).catch((error) => {
           console.log(error)
         })

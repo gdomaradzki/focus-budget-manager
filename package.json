@@ -13,10 +13,11 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "materialize-css": "^0.98.1",
     "axios": "^0.15.3",
     "express": "^4.15.2",
     "jquery": "2.1.1",
+    "materialize-css": "^0.98.1",
+    "socket.io": "^1.7.3",
     "vue": "^2.2.2",
     "vue-router": "^2.2.0"
   },

@@ -16,18 +16,10 @@
   const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'Home',
-    twoWay: true,
-    deep: true,
     data () {
       return {
         budgets: [],
         clients: []
-      }
-    },
-    watch: {
-      budgets: {
-        handler: function (value, oldValue) { console.log('new: %s, old: %s', value, oldValue) },
-        deep: true
       }
     },
     created: function () {
@@ -37,6 +29,7 @@
     methods: {
       getBudgets () {
         Axios.get(`${urlPrefix}/api/budgets`).then((res) => {
+          this.budgets = []
           for (let i in res.data) {
             let budgets = this.budgets
             budgets.push(res.data[i])

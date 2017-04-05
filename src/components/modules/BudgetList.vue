@@ -1,5 +1,10 @@
 <template>
   <div class="layout-budget-list">
+    <div class="md-budget-list">
+      <div class="md-budget-client"> Client </div>
+      <div class="md-budget-state"> Status </div>
+      <div class="md-budget-description"> Actions </div>
+    </div>
     <div v-for="budget of budgets" class="md-budget-list">
       <div class="md-budget-client">{{ budget.client }}</div>
       <div class="md-budget-state">{{ budget.state }}</div>
