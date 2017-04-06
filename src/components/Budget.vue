@@ -96,8 +96,7 @@
       this.getAllClients()
       setInterval(() => {
         this.calcTotal()
-        console.log(this.newBudget[0])
-      }, 1000)
+      }, 500)
     },
     methods: {
       getAllClients: function () {

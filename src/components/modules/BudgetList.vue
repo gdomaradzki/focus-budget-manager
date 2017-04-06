@@ -12,7 +12,7 @@
       <div class="md-budget-action">
         <ul class="layout-budget-action-menu">
           <li class="md-budget-action-item">
-            <button type="button" class="md-action-btn btn" @click="getChosenClient(budget)">View</button>
+            <button type="button" class="md-action-btn btn" @click="getChosenClient(budget); openBudgetVisualizer()">View</button>
           </li>
           <li class="md-budget-action-item">
             <router-link class="md-action-btn btn" :to="{ path: '/edit/' + budget.client + '/' + budget._id }">Edit</router-link>
@@ -36,7 +36,7 @@
         client: ''
       }
     },
-    props: ['budgets', 'clients', 'getBudgets', 'getChosenClient'],
+    props: ['budgets', 'clients', 'getBudgets', 'getChosenClient', 'openBudgetVisualizer'],
     methods: {
       deleteBudget: function (budget) {
         Axios.delete(`${urlPrefix}/api/budgets/` + budget._id, {

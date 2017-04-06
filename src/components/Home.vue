@@ -4,11 +4,20 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">Budget Manager</h1>
-          <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets" :getChosenClient="getChosenClient"></layout-budget-list>
+          <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets" :getChosenClient="getChosenClient" :openBudgetVisualizer="openBudgetVisualizer"></layout-budget-list>
         </section>
 
         <article class="layout-view-selected-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
-          <h4 class="md-budget-title"> {{ chosenClient.title }}</h4>
+          <h3 class="md-budget-client"> {{ chosenClient.client }} </h3>
+          <h4 class="md-budget-title"> {{ chosenClient.title}} </h4>
+          <h5 class="md-budget-state"> {{ chosenClient.state }} </h5>
+          <div class="layout-budget-items" v-for="item of chosenClient.items">
+            <span class="md-budget-item-title"> Item: {{ item.itemTitle }} </span>
+            <span class="md-budget-item-quantity"> Quantity: {{ item.itemQuantity }} </span>
+            <span class="md-budget-item-price"> Price: $ {{ item.itemPrice }} </span>
+            <span class="md-budget-item-item-subtotal"> Subtotal: $ {{ item.itemSubtotal }} </span>
+          </div>
+          <h5 class="md-budget-total-price">Total $ {{ chosenClient.total_price }}</h5>
         </article>
       </main>
     </div>
@@ -23,19 +32,20 @@
     props: ['budgets', 'clients', 'getBudgets'],
     data () {
       return {
-        chosenClient: {}
+        chosenClient: {},
+        isBudgetHidden: true,
+        isBudgetVisible: false
       }
-    },
-    mounted: function () {
-      setInterval(() => {
-        console.log(this.chosenClient)
-      }, 1000)
     },
     methods: {
       getChosenClient: function (budget) {
         Axios.get(`${urlPrefix}/api/budgets/` + budget._id).then((res) => {
           this.chosenClient = res.data
         })
+      },
+      openBudgetVisualizer: function () {
+        this.isBudgetHidden = !this.isBudgetHidden
+        this.isBudgetVisible = !this.isBudgetVisible
       }
     }
   }
@@ -64,6 +74,7 @@
     margin: 30px 0;
     padding: 30px 15px;
     position: relative;
+    color: $primary-color;
 
     .md-title {
       margin-top: 0;
@@ -72,6 +83,40 @@
 
     input[type=text] {
       margin: 0 15px;
+    }
+
+    .md-budget-client {
+      font-size: 26px;
+    }
+
+    .md-budget-title {
+      font-size: 22px;
+    }
+
+    .md-budget-state {
+      font-size: 16px;
+      text-transform: uppercase;
+      margin: 30px 0;
+    }
+
+    .layout-budget-items {
+      display: flex;
+      justify-content: space-between;
+      background-color: $secondary-color;
+      padding: 0 15px;
+
+      &:first-of-type {
+        padding-top: 15px;
+      }
+
+      &:last-of-type {
+        padding-bottom: 15px;
+      }
+    }
+
+    .md-budget-total-price {
+      text-align: right;
+      margin-top: 30px;
     }
   }
 </style>
