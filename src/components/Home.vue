@@ -4,11 +4,11 @@
       <main class="layout-main-page">
         <section class="layout-budget-area">
           <h1 class="md-title">Budget Manager</h1>
-          <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></layout-budget-list>
+          <layout-budget-list :budgets="budgets" :clients="clients" :getBudgets="getBudgets" :getChosenClient="getChosenClient"></layout-budget-list>
         </section>
 
         <article class="layout-view-selected-budget" :class="{ 'is-area-hidden': isBudgetHidden, 'is-area-visible': isBudgetVisible }">
-          <h1>teste</h1>
+          <h4 class="md-budget-title"> {{ chosenClient.title }}</h4>
         </article>
       </main>
     </div>
@@ -16,9 +16,28 @@
 </template>
 
 <script>
+  import Axios from 'axios'
+  const urlPrefix = process.env.NODE_ENV === 'production' ? '/api/' : `http://${window.location.hostname}:3000`
   export default {
     name: 'Home',
-    props: ['budgets', 'clients', 'getBudgets']
+    props: ['budgets', 'clients', 'getBudgets'],
+    data () {
+      return {
+        chosenClient: {}
+      }
+    },
+    mounted: function () {
+      setInterval(() => {
+        console.log(this.chosenClient)
+      }, 1000)
+    },
+    methods: {
+      getChosenClient: function (budget) {
+        Axios.get(`${urlPrefix}/api/budgets/` + budget._id).then((res) => {
+          this.chosenClient = res.data
+        })
+      }
+    }
   }
 </script>
 

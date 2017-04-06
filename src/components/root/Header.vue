@@ -26,7 +26,7 @@
             routePath: '/new/budget'
           },
           {
-            name: 'List',
+            name: 'Budgets',
             routePath: '/'
           },
           {
