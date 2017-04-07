@@ -9,4 +9,7 @@ module.exports = (app) => {
      .delete(api.deleteBudget)
      .put(api.putOneBudget)
      .get(api.getOneBudget);
+
+  app.route('/api/budgets/status/:state')
+     .get(api.getStatus);
 }

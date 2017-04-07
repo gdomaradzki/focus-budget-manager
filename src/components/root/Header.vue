@@ -8,7 +8,7 @@
         <div class="md-flex-disperser"></div>
         <md-search-input></md-search-input>
         <md-dropdown-nav dropdownName="Budget" :links="budget" :button="1"></md-dropdown-nav>
-        <md-dropdown-nav dropdownName="Status" :links="state" :button="2"></md-dropdown-nav>
+        <md-dropdown-nav dropdownName="Status" :links="state" :button="2" :getBudgetsFromStatus="getBudgetsFromStatus"></md-dropdown-nav>
       </header>
     </div>
   </div>
@@ -17,6 +17,7 @@
 <script>
   export default {
     name: 'Header',
+    props: ['getBudgetsFromStatus'],
     data () {
       return {
         budget: [
@@ -36,20 +37,34 @@
         ],
         state: [
           {
+            name: 'All',
+            routePath: '/',
+            value: 'all'
+          },
+          {
             name: 'Approved',
-            routePath: '/'
+            routePath: '/',
+            value: 'approved'
           },
           {
             name: 'Denied',
-            routePath: '/'
+            routePath: '/',
+            value: 'denied'
           },
           {
             name: 'Waiting',
-            routePath: '/'
+            routePath: '/',
+            value: 'waiting'
           },
           {
-            name: 'Being Edited',
-            routePath: '/'
+            name: 'Writing',
+            routePath: '/',
+            value: 'writing'
+          },
+          {
+            name: 'Editing',
+            routePath: '/',
+            value: 'editing'
           }
         ]
       }

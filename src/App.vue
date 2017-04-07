@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <layout-header></layout-header>
+      <layout-header :getBudgetsFromStatus="getBudgetsFromStatus"></layout-header>
       <router-view :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></router-view>
     </div>
   </div>
@@ -37,6 +37,19 @@
           for (let i in res.data) {
             let clients = this.clients
             clients.push(res.data[i])
+          }
+        })
+      },
+      getBudgetsFromStatus: function (link) {
+        Axios.get(`${urlPrefix}/api/budgets/status/` + link.value).then((res) => {
+          this.budgets = []
+          for (let i in res.data) {
+            let budgets = this.budgets
+            budgets.push(res.data[i])
+          }
+
+          if (link.value === 'all') {
+            this.getBudgets()
           }
         })
       }

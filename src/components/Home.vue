@@ -17,7 +17,10 @@
             <span class="md-budget-item-price"> Price: $ {{ item.itemPrice }} </span>
             <span class="md-budget-item-item-subtotal"> Subtotal: $ {{ item.itemSubtotal }} </span>
           </div>
-          <h5 class="md-budget-total-price">Total $ {{ chosenClient.total_price }}</h5>
+          <div class="layout-critical-info">
+            <button class="md-close-selected-budget-btn btn" @click="closeSelectedBudget()">close</button>
+            <h5 class="md-budget-total-price">Total $ {{ chosenClient.total_price }}</h5>
+          </div>
         </article>
       </main>
     </div>
@@ -44,8 +47,12 @@
         })
       },
       openBudgetVisualizer: function () {
-        this.isBudgetHidden = !this.isBudgetHidden
-        this.isBudgetVisible = !this.isBudgetVisible
+        this.isBudgetHidden = false
+        this.isBudgetVisible = true
+      },
+      closeSelectedBudget: function () {
+        this.isBudgetHidden = true
+        this.isBudgetVisible = false
       }
     }
   }
@@ -87,16 +94,27 @@
 
     .md-budget-client {
       font-size: 26px;
+
+      @media (max-width: 600px) {
+        text-align: center;
+      }
     }
 
     .md-budget-title {
       font-size: 22px;
+      @media (max-width: 600px) {
+        text-align: center;
+      }
     }
 
     .md-budget-state {
       font-size: 16px;
       text-transform: uppercase;
       margin: 30px 0;
+
+      @media (max-width: 600px) {
+        text-align: center;
+      }
     }
 
     .layout-budget-items {
@@ -112,11 +130,35 @@
       &:last-of-type {
         padding-bottom: 15px;
       }
+
+      @media (max-width: 600px) {
+        justify-content: flex-start;
+        flex-direction: column;
+        margin: 15px 0;
+        padding: 15px;
+
+        & > * {
+          margin: 10px 0;
+        }
+      }
     }
 
-    .md-budget-total-price {
-      text-align: right;
+    .layout-critical-info {
+      display: flex;
+      justify-content: space-between;
       margin-top: 30px;
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        .md-close-selected-budget-btn {
+          width: 100%;
+        }
+
+        .md-budget-total-price {
+          text-align: center;
+          margin-top: 30px;
+        }
+      }
     }
   }
 </style>

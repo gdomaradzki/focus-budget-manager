@@ -7,7 +7,7 @@
 
     <ul class="layout-vertical-list md-dropdown-list" v-bind:class="{ 'is-hidden': isHidden, 'is-collapsed': isCollapsed }">
       <li v-for="link of links" class="md-dropdown-list-item">
-        <router-link v-bind:to="link.routePath" class="md-list-anchor">{{ link.name }}</router-link>
+        <router-link v-bind:to="link.routePath" class="md-list-anchor" @click.native="getBudgetsFromStatus(link)">{{ link.name }}</router-link>
       </li>
     </ul>
   </nav>
@@ -16,7 +16,7 @@
 <script>
   export default {
     name: 'Dropdown',
-    props: ['dropdownName', 'button', 'links'],
+    props: ['dropdownName', 'button', 'links', 'getBudgetsFromStatus'],
     data () {
       return {
         isHidden: true,
@@ -30,7 +30,6 @@
         this.isHidden = !this.isHidden
         this.isCollapsed = !this.isCollapsed
       },
-
       // Voltar neste metodo quando implementar as funcionalidades principais do projeto
       toggle: function (button) {
         if (button === 1) {

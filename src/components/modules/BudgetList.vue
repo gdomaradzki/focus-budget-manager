@@ -61,6 +61,10 @@
     width: 100%;
     color: $primary-color;
 
+    @media (max-width: 800px) {
+      margin: 30px 0;
+    }
+
     & > * {
       width: 100%;
       background-color: rgba(0,0,0, .6);

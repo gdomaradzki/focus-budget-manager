@@ -51,8 +51,17 @@ api.getOneBudget = (req, res) => {
       return res.send();
     }
     res.json(budget);
-  })
-}
+  });
+};
+
+api.getStatus = (req, res) => {
+  Budgets.find({ state: req.params.state }, (error, budget) => {
+    if (error) {
+      return res.send();
+    }
+    res.json(budget);
+  });
+};
 
 api.deleteBudget = (req, res) => {
   Budgets.remove({ _id: req.params._id }, function (error, removed) {
