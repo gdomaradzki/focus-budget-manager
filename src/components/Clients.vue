@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s12">
       <section class="layout-client-listing">
-        <h2 class="md-title">clients lists</h2>
+        <h2 class="md-title">client lists</h2>
 
         <layout-client-list :clients="clients" :getChosenClient="getChosenClient"></layout-client-list>
 
