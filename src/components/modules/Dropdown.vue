@@ -1,6 +1,6 @@
 <template>
   <nav class="md-dropdown-nav">
-    <button class="md-dropdown-btn btn" @click="dropdownButton (); toggle(button)">
+    <button class="md-dropdown-btn btn" @click.prevent="toggle(button)">
       {{ dropdownName }}
       <md-dropdown-arrow></md-dropdown-arrow>
     </button>
@@ -16,37 +16,11 @@
 <script>
   export default {
     name: 'Dropdown',
-    props: ['dropdownName', 'button', 'links', 'getBudgetsFromStatus'],
+    props: ['dropdownName', 'button', 'links', 'getBudgetsFromStatus', 'toggle'],
     data () {
       return {
         isHidden: true,
-        isCollapsed: false,
-        budgetBtn: false,
-        stateBtn: false
-      }
-    },
-    methods: {
-      dropdownButton () {
-        this.isHidden = !this.isHidden
-        this.isCollapsed = !this.isCollapsed
-      },
-      // Voltar neste metodo quando implementar as funcionalidades principais do projeto
-      toggle: function (button) {
-        if (button === 1) {
-          if (this.$data.budgetBtn) {
-            this.$data.budgetBtn = false
-          } else {
-            this.$data.budgetBtn = true
-            this.$data.stateBtn = false
-          }
-        } else if (button === 2) {
-          if (this.$data.stateBtn) {
-            this.$data.stateBtn = false
-          } else {
-            this.$data.stateBtn = true
-            this.$data.budgetBtn = false
-          }
-        }
+        isCollapsed: false
       }
     }
   }
@@ -134,7 +108,7 @@
   }
 
   .md-dropdown-list {
-    background-color: rgba(0,0,0, .6);
+    background-color: #26a69a;
     position: absolute;
     top: 79px;
     left: 0;

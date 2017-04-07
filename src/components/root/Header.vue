@@ -7,8 +7,8 @@
         </router-link>
         <div class="md-flex-disperser"></div>
         <md-search-input></md-search-input>
-        <md-dropdown-nav dropdownName="Budget" :links="budget" :button="1"></md-dropdown-nav>
-        <md-dropdown-nav dropdownName="Status" :links="state" :button="2" :getBudgetsFromStatus="getBudgetsFromStatus"></md-dropdown-nav>
+        <md-dropdown-nav ref="budgetDropdown" dropdownName="Budget" :links="budget" :button="1" :toggle="toggle"></md-dropdown-nav>
+        <md-dropdown-nav ref="stateDropdown" dropdownName="Status" :links="state" :button="2" :getBudgetsFromStatus="getBudgetsFromStatus" :toggle="toggle"></md-dropdown-nav>
       </header>
     </div>
   </div>
@@ -67,6 +67,23 @@
             value: 'editing'
           }
         ]
+      }
+    },
+    methods: {
+      toggle: function (button) {
+        let budgetDropdown = this.$refs.budgetDropdown
+        let stateDropdown = this.$refs.stateDropdown
+        if (button === 1) {
+          budgetDropdown.isHidden = !budgetDropdown.isHidden
+          budgetDropdown.isCollapsed = !budgetDropdown.isCollapsed
+          stateDropdown.isHidden = true
+          stateDropdown.isCollapsed = false
+        } else {
+          stateDropdown.isHidden = !stateDropdown.isHidden
+          stateDropdown.isCollapsed = !stateDropdown.isCollapsed
+          budgetDropdown.isHidden = true
+          budgetDropdown.isCollapsed = false
+        }
       }
     }
   }

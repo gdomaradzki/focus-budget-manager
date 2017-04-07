@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <layout-header :getBudgetsFromStatus="getBudgetsFromStatus"></layout-header>
+      <layout-header :getBudgetsFromStatus="getBudgetsFromStatus" ref="header"></layout-header>
       <router-view :budgets="budgets" :clients="clients" :getBudgets="getBudgets"></router-view>
     </div>
   </div>
