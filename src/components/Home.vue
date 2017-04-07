@@ -121,15 +121,7 @@
       display: flex;
       justify-content: space-between;
       background-color: $secondary-color;
-      padding: 0 15px;
-
-      &:first-of-type {
-        padding-top: 15px;
-      }
-
-      &:last-of-type {
-        padding-bottom: 15px;
-      }
+      padding: 15px;
 
       @media (max-width: 600px) {
         justify-content: flex-start;

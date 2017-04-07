@@ -26,13 +26,13 @@
             name: 'New',
             routePath: '/new/budget'
           },
-          {
-            name: 'Budgets',
-            routePath: '/'
-          },
+          // {
+          //   name: 'Budgets',
+          //   routePath: '/'
+          // },
           {
             name: 'Clients',
-            routePath: '/'
+            routePath: '/clients'
           }
         ],
         state: [
