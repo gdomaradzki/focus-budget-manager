@@ -8,7 +8,7 @@ const express = require('express'),
       passport = require('passport'),
       passportConfig = require('./passport')(passport),
       jwt = require('jsonwebtoken'),
-      config = require('./config'),
+      config = require('./index.js'),
       database = require('./database')(mongoose, config);
 
 app.use(express.static('.'));
@@ -20,7 +20,7 @@ app.use(passport.initialize());
 
 app.set('secretauth', config.secret);
 
-consign({ cwd: 'BudgetManagerAPI' })
+consign({ cwd: 'services/BudgetManagerAPI' })
       .include('app/setup')
       .then('app/api')
       .then('app/routes')

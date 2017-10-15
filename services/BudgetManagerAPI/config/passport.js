@@ -1,11 +1,11 @@
 const mongoose = require('mongoose'),
       PassportJWT = require('passport-jwt'),
-      ExtractJWT = PassportJWT.ExtractJWT,
+      ExtractJWT = PassportJWT.ExtractJwt,
       Strategy = PassportJWT.Strategy,
       config = require('./index.js'),
-      models = require('@BudgetManager');
+      models = require('@BudgetManager/app/setup');
 
-module.export = (passport) => {
+module.exports = (passport) => {
   const User = models.User;
 
   const parameters = {
