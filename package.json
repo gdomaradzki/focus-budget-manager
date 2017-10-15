@@ -31,7 +31,7 @@
   "homepage": "https://github.com/gdomaradzki/focus-gestor-orcamentos#readme",
   "_moduleAliases": {
     "@root": ".",
-    "@BudgetManager": "./services/BudgetManagerAPI/",
+    "@BudgetManager": "./services/BudgetManagerAPI",
     "@BudgetManagerModels": "./services/BudgetManagerAPI/app/models",
     "@BudgetManagerAPI": "./services/BudgetManagerAPI/config/app.js",
     "@config": "./services/BudgetManagerAPI/config/index.js"
