@@ -1,6 +1,8 @@
 const mongoose = require('mongoose'),
       config = require('@config');
 
+const api = {};
+
 api.setup = (req, res) => {
   const admin = new User({
     username: 'admin',
