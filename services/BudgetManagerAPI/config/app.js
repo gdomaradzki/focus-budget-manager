@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(passport.initialize());
 
-app.set('secretauth', config.secret);
+app.set('budgetsecret', config.secret);
 
 consign({ cwd: 'services' })
       .include('BudgetManagerAPI/app/setup')
