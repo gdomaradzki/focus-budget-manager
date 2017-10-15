@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.set('secretauth', config.secret);
 
 consign({ cwd: 'BudgetManagerAPI' })
-      .include('app/models')
+      .include('app/setup')
       .then('app/api')
       .then('app/routes')
       .into(app);
