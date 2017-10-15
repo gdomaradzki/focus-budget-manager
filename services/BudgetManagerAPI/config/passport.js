@@ -2,11 +2,12 @@ const mongoose = require('mongoose'),
       PassportJWT = require('passport-jwt'),
       ExtractJWT = PassportJWT.ExtractJWT,
       Strategy = PassportJWT.Strategy,
-      config = require('./index.js');
-
-const User = mongoose.model('User');
+      config = require('./index.js'),
+      models = require('@BudgetManager');
 
 module.export = (passport) => {
+  const User = models.User;
+
   const parameters = {
     secretOrKey: config.secret,
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
