@@ -1,9 +1,8 @@
-const mongoose = require('mongoose'),
-      config = require('@config');
+const mongoose = require('mongoose');
 
 const api = {};
 
-api.setup = (req, res) => {
+api.setup = (User) => (req, res) => {
   const admin = new User({
     username: 'admin',
     password: 'admin',
@@ -18,8 +17,8 @@ api.setup = (req, res) => {
   })
 }
 
-api.index = (User) => (req, res) => {
-  const token = config.get('budgetsecret');
+api.index = (User, BudgetToken) => (req, res) => {
+  const token = BudgetToken;
 
   if (token) {
     User.find({}, (error, users) => {
@@ -29,7 +28,7 @@ api.index = (User) => (req, res) => {
   } else return res.status(403).send({ success: false, message: 'Unauthorized' });
 }
 
-api.signup = (req, res) => {
+api.signup = (User) => (req, res) => {
   if (!req.body.username || !req.body.password) res.json({ success: false, message: 'Please, pass an username and password.' });
   else {
     const newUser = new User({
@@ -37,11 +36,12 @@ api.signup = (req, res) => {
       password: req.body.password,
       clients: []
     });
+    console.log(newUser)
 
-    newUser.save((error) => {
-      if (error) return res.json({ success: false, message: 'Username already exists.' });
+    newUser.save(error => {
+      if (error) return res.status(400).json({ success: false, message: 'Username already exists.' });
       res.json({ success: true, message: 'Account created successfully' });
-    })
+    });
   }
 }
 
