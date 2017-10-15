@@ -29,6 +29,11 @@
     "url": "https://github.com/gdomaradzki/focus-gestor-orcamentos/issues"
   },
   "homepage": "https://github.com/gdomaradzki/focus-gestor-orcamentos#readme",
+  "_moduleAliases": {
+    "@root": ".",
+    "@BudgetManagerAPI": "./services/BudgetManagerAPI/config/app.js",
+    "@config": "./services/BudgetManagerAPI/config/index.js"
+  },
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
