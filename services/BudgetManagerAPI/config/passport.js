@@ -1,5 +1,4 @@
-const mongoose = require('mongoose'),
-      PassportJWT = require('passport-jwt'),
+const PassportJWT = require('passport-jwt'),
       ExtractJWT = PassportJWT.ExtractJwt,
       Strategy = PassportJWT.Strategy,
       config = require('./index.js'),
