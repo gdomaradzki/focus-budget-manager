@@ -42,3 +42,5 @@ api.signup = (req, res) => {
     })
   }
 }
+
+module.exports = api;
