@@ -22,7 +22,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background-color: $background-color;
+      background-color: $background-tint;
       opacity: .3;
       z-index: -1;
     }
