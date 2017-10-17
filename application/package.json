@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "materialize-css": "^0.100.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
