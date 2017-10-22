@@ -24,3 +24,23 @@
       transform: scaleX(1)
   }
 }
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-2500px);
+    opacity: 0
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-20px);
+  }
+  90% {
+    transform: translateX(10px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
