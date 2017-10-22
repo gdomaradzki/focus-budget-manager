@@ -21,8 +21,8 @@
                       required>
         </v-text-field>
 
-        <v-btn flat color="light-blue lighten-1" @click.native="signUpVisible = true">Create account</v-btn>
-        <v-btn color="light-blue lighten-1" @click.native="submitAuthentication()">Login</v-btn>
+        <v-btn block flat color="light-blue lighten-1" @click.native="signUpVisible = true">Create account</v-btn>
+        <v-btn block color="light-blue lighten-1" @click.native="submitAuthentication()">Login</v-btn>
       </v-form>
     </div>
 
@@ -51,7 +51,7 @@
       </v-form>
     </div>
 
-    <v-snackbar timeout="6000"
+    <v-snackbar :timeout="timeout"
                 bottom="bottom"
                 color="red lighten-1"
                 v-model="snackbar">
@@ -71,6 +71,7 @@
         signUpVisible: false,
         loginPasswordVisible: false,
         signUpPasswordVisible: false,
+        timeout: 6000,
         rules: [ (value) => !!value || 'This field is required' ],
         credentials: {
           username: '',
