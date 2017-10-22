@@ -11,13 +11,13 @@ export default {
         .then(({data: {token}}) => {
           context.$cookie.set('token', token, '30s')
 
-          context.message = 'Authenticated'
           context.validLogin = true
 
           this.user.authenticated = true
 
           if (redirect) router.push(redirect)
         }).catch(({response: {data}}) => {
+          context.snackbar = true
           context.message = data.message
         })
   },

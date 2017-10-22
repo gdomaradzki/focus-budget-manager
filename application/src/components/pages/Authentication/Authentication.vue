@@ -1,9 +1,6 @@
 <template>
   <div class="l-auth">
     <v-form v-model="validLogin">
-      <span class="md-auth-message">
-        {{ message }}
-      </span>
       <v-text-field label="Username"
                     v-model="credentials.username"
                     prepend-icon="account_box"
@@ -23,6 +20,13 @@
                     required>
       </v-text-field>
 
+      <v-snackbar timeout="6000"
+                  bottom="bottom"
+                  color="red lighten-1"
+                  v-model="snackbar">
+        {{ message }}
+      </v-snackbar>
+
       <v-btn block color="light-blue lighten-1" @click.native="submitAuthentication()">Login</v-btn>
     </v-form>
   </div>
@@ -33,6 +37,7 @@
   export default {
     data () {
       return {
+        snackbar: false,
         validLogin: false,
         passwordVisible: false,
         rules: [ (value) => !!value || 'This field is required' ],
@@ -60,5 +65,8 @@
     margin: 45px auto;
     min-width: 272px;
     max-width: 320px;
+  }
+
+  .md-auth-message {
   }
 </style>
