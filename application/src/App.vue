@@ -8,7 +8,10 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    data () {
+      return {}
+    }
   }
 </script>
 
@@ -16,7 +19,7 @@
   @import "./assets/styles";
 
   body {
-    background: url('https://chrismartinphotography.files.wordpress.com/2013/01/2012-landscapes-c2a9-christopher-martin-93441.jpg') no-repeat center center fixed;
+    background: url('./assets/images/background.jpg') no-repeat center center fixed;
     &:after {
       content: '';
       position: fixed;
