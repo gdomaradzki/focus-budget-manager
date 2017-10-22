@@ -12,6 +12,8 @@ export default {
           context.$cookie.set('token', token, '30s')
 
           context.message = 'Authenticated'
+          context.validLogin = true
+
           this.user.authenticated = true
 
           if (redirect) router.push(redirect)
