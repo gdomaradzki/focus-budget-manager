@@ -65,8 +65,6 @@
     margin: 45px auto;
     min-width: 272px;
     max-width: 320px;
-  }
-
-  .md-auth-message {
+    animation: bounceIn 1s forwards ease;
   }
 </style>
