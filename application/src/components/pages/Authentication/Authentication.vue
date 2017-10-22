@@ -1,25 +1,29 @@
 <template>
   <div class="l-auth">
     <v-form v-model="validLogin">
-      <span v-if="message != null">{{ message }}</span>
+      <span class="md-auth-message">
+        {{ message }}
+      </span>
       <v-text-field label="Username"
                     v-model="credentials.username"
                     prepend-icon="account_box"
-                    single-line
-                    required>
+                    :rules="rules"
+                    required
+                    color="light-blue lighten-1">
       </v-text-field>
 
       <v-text-field label="Password"
                     v-model="credentials.password"
                     prepend-icon="lock"
+                    :rules="rules"
                     :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
                     :append-icon-cb="() => (passwordVisible = !passwordVisible)"
                     :type="passwordVisible ? 'text' : 'password'"
-                    single-line
+                    color="light-blue lighten-1"
                     required>
       </v-text-field>
 
-      <v-btn block color="primary" @click.native="submitAuthentication()">Login</v-btn>
+      <v-btn block color="light-blue lighten-1" @click.native="submitAuthentication()">Login</v-btn>
     </v-form>
   </div>
 </template>
@@ -31,6 +35,7 @@
       return {
         validLogin: false,
         passwordVisible: false,
+        rules: [ (value) => !!value || 'This field is required' ],
         credentials: {
           username: '',
           password: ''
@@ -48,12 +53,12 @@
 
 <style lang="scss">
   @import "./../../../assets/styles";
-  span { color: white }
 
   .l-auth {
     background-color: $background-color;
     padding: 15px;
-    margin: 45px 0;
-    position: relative;
+    margin: 45px auto;
+    min-width: 272px;
+    max-width: 320px;
   }
 </style>
