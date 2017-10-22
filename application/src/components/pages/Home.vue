@@ -2,7 +2,9 @@
   <div>
     <h3>Hi! this is our App's Home</h3>
     <ul>
-      <li v-if="users != null" v-for="user in users">{{ user.username }}</li>
+      <li v-if="users != null" v-for="user in users">
+        {{ user.username }}
+      </li>
     </ul>
   </div>
 </template>
