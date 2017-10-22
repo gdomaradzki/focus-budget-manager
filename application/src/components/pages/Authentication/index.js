@@ -38,16 +38,14 @@ export default {
         })
   },
 
-  checkAuthentication (context) {
-    const token = context.$cookie.get('token')
+  checkAuthentication () {
+    const token = document.cookie
 
     if (token) this.user.authenticated = true
     else this.user.authenticated = false
   },
 
   getAuthenticationHeader (context) {
-    return {
-      'Authorization': `Bearer ${context.$cookie.get('token')}`
-    }
+    return `Bearer ${context.$cookie.get('token')}`
   }
 }
