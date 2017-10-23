@@ -10,9 +10,7 @@ export default {
     Axios.post(`${BudgetManagerAPI}/api/v1/auth`, credentials)
         .then(({data: {token}}) => {
           context.$cookie.set('token', token, '1D')
-
           context.validLogin = true
-
           this.user.authenticated = true
 
           if (redirect) router.push(redirect)
@@ -26,9 +24,7 @@ export default {
     Axios.post(`${BudgetManagerAPI}/api/v1/signup`, credentials)
         .then(({data: {token}}) => {
           context.$cookie.set('token', token, '1D')
-
-          context.validLogin = true
-
+          context.validSignUp = true
           this.user.authenticated = true
 
           if (redirect) router.push(redirect)
