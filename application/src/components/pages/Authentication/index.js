@@ -22,12 +22,11 @@ export default {
 
   signup (context, credentials, redirect) {
     Axios.post(`${BudgetManagerAPI}/api/v1/signup`, credentials)
-        .then(({data: {token}}) => {
-          context.$cookie.set('token', token, '1D')
+        .then(() => {
           context.validSignUp = true
           this.user.authenticated = true
 
-          if (redirect) router.push(redirect)
+          this.authenticate(context, credentials, redirect)
         }).catch(({response: {data}}) => {
           context.snackbar = true
           context.message = data.message
