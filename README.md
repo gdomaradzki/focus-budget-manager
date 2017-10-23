@@ -17,7 +17,7 @@ npm i
 # Go back to your root folder
 node services
 
-# In your application folder:
+# In your application folder
 npm i
 
 # Serve with hot reload at localhost:8080
