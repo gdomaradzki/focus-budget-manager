@@ -20,6 +20,7 @@
 
   body {
     background: url('./assets/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
     &:after {
       content: '';
       position: fixed;
