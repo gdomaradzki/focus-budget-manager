@@ -43,9 +43,9 @@
   @import "./../assets/styles";
 
   .l-header-container {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: $background-color;
     margin: 0 auto;
-    padding: 0 15px 15px;
+    padding: 0 15px;
     min-width: 272px;
 
     label {
@@ -58,7 +58,7 @@
 
     .input-group__details {
       &:before {
-        background-color: rgba(255, 255, 255, 0.42) !important;
+        background-color: $border-color-input !important;
       }
     }
 
