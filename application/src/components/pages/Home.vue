@@ -7,13 +7,22 @@
         Focus Budget Manager
       </h4>
 
-      <budget-list></budget-list>
+      <budget-list>
+        <budget-list-header slot="budget-list-header"></budget-list-header>
+        <budget-list-body slot="budget-list-body"></budget-list-body>
+      </budget-list>
     </div>
   </main>
 </template>
 
 <script>
+  import BudgetListHeader from './../Budget/BudgetListHeader'
+  import BudgetListBody from './../Budget/BudgetListBody'
   export default {
+    components: {
+      'budget-list-header': BudgetListHeader,
+      'budget-list-body': BudgetListBody
+    },
     data () {
       return {
         users: []
