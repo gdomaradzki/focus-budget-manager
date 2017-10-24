@@ -106,6 +106,16 @@
     min-width: 272px;
     max-width: 320px;
     animation: bounceIn 1s forwards ease;
+
+    label, input, .icon {
+      color: #29b6f6!important;
+    }
+
+    .input-group__details {
+      &:before {
+        background-color: $border-color-input !important;
+      }
+    }
   }
 
   .l-signup {
@@ -115,5 +125,15 @@
     min-width: 272px;
     max-width: 320px;
     animation: slideInFromLeft 1s forwards ease;
+
+    label, input, .icon {
+      color: #29b6f6!important;
+    }
+
+    .input-group__details {
+      &:before {
+        background-color: $border-color-input !important;
+      }
+    }
   }
 </style>

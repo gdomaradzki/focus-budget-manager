@@ -5,17 +5,17 @@
         <v-text-field v-model="search"
                       label="Search"
                       append-icon="search"
-                      color="teal accent-3">
+                      color="light-blue lighten-1">
         </v-text-field>
       </v-flex>
 
       <v-flex xs12 offset-md2 md1>
-        <v-btn block color="teal accent-3">Clients</v-btn>
+        <v-btn block color="light-blue lighten-1">Clients</v-btn>
       </v-flex>
 
       <v-flex xs12 offset-md1 md2>
         <v-select label="Status"
-                  color="teal accent-3"
+                  color="light-blue lighten-1"
                   v-model="status"
                   :items="statusItems"
                   single-line>
@@ -48,12 +48,8 @@
     padding: 0 15px;
     min-width: 272px;
 
-    label {
-      color: #1de9b6!important;
-    }
-
-    input {
-      color: #1de9b6!important;
+    label, input, .icon, .input-group__selections__comma {
+      color: #29b6f6!important;
     }
 
     .input-group__details {
@@ -64,10 +60,6 @@
 
     .btn {
       margin-top: 15px;
-    }
-
-    .icon {
-      color: #1de9b6!important;
     }
   }
 </style>
