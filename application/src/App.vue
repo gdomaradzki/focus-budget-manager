@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <v-app>
     <v-container>
       <router-view/>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -31,6 +31,10 @@
       background-color: $background-tint;
       opacity: .3;
       z-index: -1;
+    }
+
+    .application {
+      background: none;
     }
   }
 </style>
