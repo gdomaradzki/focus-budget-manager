@@ -11,9 +11,7 @@ const Schema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
-
-  clients: [{}]
+  }
 });
 
 // We won't use arrow functions here because of automatic lexical scope binding
