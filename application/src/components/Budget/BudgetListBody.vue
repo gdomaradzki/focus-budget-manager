@@ -1,9 +1,9 @@
 <template>
   <section class="l-budget-body">
-    <div class="md-budget">
-      <div class="md-budget-info white--text">Client name</div>
-      <div class="md-budget-info white--text">Budget title</div>
-      <div class="md-budget-info white--text">Budget state</div>
+    <div class="md-budget" v-if="budgets != null" v-for="budget in budgets">
+      <div class="md-budget-info white--text">{{ budget.client }}</div>
+      <div class="md-budget-info white--text">{{ budget.title }}</div>
+      <div class="md-budget-info white--text">{{ budget.state }}</div>
       <div class="l-budget-actions">
         <v-btn small flat color="light-blue lighten-1">
           <v-icon small>visibility</v-icon>
@@ -20,7 +20,9 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    props: ['budgets']
+  }
 </script>
 
 <style lang="scss">
