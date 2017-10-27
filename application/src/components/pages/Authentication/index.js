@@ -8,9 +8,11 @@ export default {
 
   authenticate (context, credentials, redirect) {
     Axios.post(`${BudgetManagerAPI}/api/v1/auth`, credentials)
-        .then(({data: {token}}) => {
-          context.$cookie.set('token', token, '1D')
+        .then(({data}) => {
+          context.$cookie.set('token', data.token, '1D')
+          context.$cookie.set('user_id', data.user._id, '1D')
           context.validLogin = true
+
           this.user.authenticated = true
 
           if (redirect) router.push(redirect)
@@ -24,7 +26,6 @@ export default {
     Axios.post(`${BudgetManagerAPI}/api/v1/signup`, credentials)
         .then(() => {
           context.validSignUp = true
-          this.user.authenticated = true
 
           this.authenticate(context, credentials, redirect)
         }).catch(({response: {data}}) => {
@@ -32,6 +33,12 @@ export default {
           context.message = data.message
         })
   },
+
+  signout (context) {
+    context.$cookie.delete('token')
+    context.$cookie.delete('user_id')
+    this.user.authenticated = false
+  }
 
   checkAuthentication () {
     const token = document.cookie
