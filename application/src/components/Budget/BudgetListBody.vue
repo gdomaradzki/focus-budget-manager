@@ -36,9 +36,11 @@
       width: 100%;
       display: flex;
       flex-direction: column;
+      margin: 15px 0;
 
       @media (min-width: 960px) {
         flex-direction: row;
+        margin: 0;
       }
 
       .md-budget-info {
@@ -51,6 +53,14 @@
         height: 35px;
         align-items: center;
         justify-content: center;
+
+        &:first-of-type, &:nth-of-type(2) {
+          text-transform: capitalize;
+        }
+
+        &:nth-of-type(3) {
+          text-transform: uppercase;
+        }
 
         @media (min-width: 601px) {
           justify-content: flex-start;
