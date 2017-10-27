@@ -9,15 +9,20 @@
 
       <budget-list>
         <budget-list-header slot="budget-list-header"></budget-list-header>
-        <budget-list-body slot="budget-list-body"></budget-list-body>
+        <budget-list-body slot="budget-list-body" :budgets="budgets"></budget-list-body>
       </budget-list>
     </div>
   </main>
 </template>
 
 <script>
+  import Axios from 'axios'
+  import Authentication from '@/components/pages/Authentication'
   import BudgetListHeader from './../Budget/BudgetListHeader'
   import BudgetListBody from './../Budget/BudgetListBody'
+
+  const BudgetManagerAPI = `http://${window.location.hostname}:3001`
+
   export default {
     components: {
       'budget-list-header': BudgetListHeader,
@@ -25,7 +30,18 @@
     },
     data () {
       return {
-        users: []
+        budgets: []
+      }
+    },
+    mounted () {
+      this.getAllBudgets()
+    },
+    methods: {
+      getAllBudgets () {
+        Axios.get(`${BudgetManagerAPI}/api/v1/budget`, {
+          headers: { 'Authorization': Authentication.getAuthenticationHeader(this) },
+          params: { user_id: this.$cookie.get('user_id') }
+        }).then(({data}) => (this.budgets = data))
       }
     }
   }
