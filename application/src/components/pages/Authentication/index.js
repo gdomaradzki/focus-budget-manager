@@ -34,11 +34,13 @@ export default {
         })
   },
 
-  signout (context) {
+  signout (context, redirect) {
     context.$cookie.delete('token')
     context.$cookie.delete('user_id')
     this.user.authenticated = false
-  }
+
+    if (redirect) router.push(redirect)
+  },
 
   checkAuthentication () {
     const token = document.cookie
