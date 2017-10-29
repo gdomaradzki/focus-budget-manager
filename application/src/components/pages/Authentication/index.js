@@ -44,9 +44,7 @@ export default {
 
   checkAuthentication () {
     const token = document.cookie
-
-    if (token) this.user.authenticated = true
-    else this.user.authenticated = false
+    this.user.authenticated = token !== false
   },
 
   getAuthenticationHeader (context) {
