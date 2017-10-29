@@ -2,22 +2,32 @@ const mongoose = require('mongoose');
 
 const api = {};
 
-api.store = (User, Budget, Token) => (req, res) => {
+api.store = (User, Budget, Client, Token) => (req, res) => {
   if (Token) {
-    const budget = new Budget({
-      client_id: req.body.client_id,
-      user_id: req.body.user_id,
-      client: req.body.client,
-      state: req.body.state,
-      title: req.body.title,
-      total_price: req.body.total_price,
-      items: req.body.items
-    });
 
-    budget.save(error => {
-      if (error) res.status(400).json(error)
-      res.status(200).json({ success: true, message: "Budget registered successfully" })
+    Client.findOne({ _id: req.body.client_id }, (error, client) => {
+      if (error) res.status(400).json(error);
+
+      if (client) {
+        const budget = new Budget({
+          client_id: req.body.client_id,
+          user_id: req.body.user_id,
+          client: client.name,
+          state: req.body.state,
+          title: req.body.title,
+          total_price: req.body.total_price,
+          items: req.body.items
+        });
+
+        budget.save(error => {
+          if (error) res.status(400).json(error)
+          res.status(200).json({ success: true, message: "Budget registered successfully" })
+        })
+      } else {
+        res.status(400).json({ success: false, message: "Invalid client" })
+      }
     })
+
   } else return res.status(403).send({ success: false, message: 'Unauthorized' });
 }
 
