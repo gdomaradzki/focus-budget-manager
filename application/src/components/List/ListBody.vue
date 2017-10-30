@@ -1,38 +1,42 @@
 <template>
-  <section class="l-budget-body">
-    <div class="md-budget" v-if="budgets != null" v-for="budget in budgets">
-      <div class="md-budget-info white--text">{{ budget.client }}</div>
-      <div class="md-budget-info white--text">{{ budget.title }}</div>
-      <div class="md-budget-info white--text">{{ budget.state }}</div>
-      <div class="l-budget-actions">
-        <v-btn small flat color="light-blue lighten-1">
-          <v-icon small>visibility</v-icon>
-        </v-btn>
-        <v-btn small flat color="yellow accent-1">
-          <v-icon>mode_edit</v-icon>
-        </v-btn>
-        <v-btn small flat color="red lighten-1">
-          <v-icon>delete_forever</v-icon>
-        </v-btn>
-      </div>
+  <section class="l-list-body">
+    <div class="md-list-item"
+         v-if="data != null"
+         v-for="item in data">
+
+         <div class="md-info white--text" v-for="info in item" v-if="info != item._id">
+           {{ info }}
+         </div>
+
+        <div class="l-actions">
+          <v-btn small flat color="light-blue lighten-1">
+            <v-icon small>visibility</v-icon>
+          </v-btn>
+          <v-btn small flat color="yellow accent-1">
+            <v-icon>mode_edit</v-icon>
+          </v-btn>
+          <v-btn small flat color="red lighten-1">
+            <v-icon>delete_forever</v-icon>
+          </v-btn>
+        </div>
     </div>
   </section>
 </template>
 
 <script>
   export default {
-    props: ['budgets']
+    props: ['data']
   }
 </script>
 
 <style lang="scss">
   @import "./../../assets/styles";
 
-  .l-budget-body {
+  .l-list-body {
     display: flex;
     flex-direction: column;
 
-    .md-budget {
+    .md-list-item {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -43,7 +47,7 @@
         margin: 0;
       }
 
-      .md-budget-info {
+      .md-info {
         flex-basis: 25%;
         width: 100%;
         background-color: rgba(0, 175, 255, 0.45);
@@ -67,7 +71,7 @@
         }
       }
 
-      .l-budget-actions {
+      .l-actions {
         flex-basis: 25%;
         display: flex;
         background-color: rgba(0, 175, 255, 0.45);
