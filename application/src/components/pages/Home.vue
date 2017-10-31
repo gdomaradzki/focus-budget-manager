@@ -22,6 +22,47 @@
                 v-model="snackbar">
       {{ message }}
     </v-snackbar>
+
+    <v-fab-transition>
+      <v-speed-dial v-model="fab"
+                    bottom
+                    right
+                    fixed
+                    direction="top"
+                    transition="scale-transition">
+          <v-btn slot="activator"
+                 color="red lighten-1"
+                 dark
+                 fab
+                 v-model="fab">
+                <v-icon>add</v-icon>
+                <v-icon>close</v-icon>
+          </v-btn>
+
+          <v-tooltip left>
+            <v-btn color="light-blue lighten-1"
+                   dark
+                   small
+                   fab
+                   slot="activator">
+                  <v-icon>assignment</v-icon>
+            </v-btn>
+            <span>Add new Budget</span>
+          </v-tooltip>
+
+          <v-tooltip left>
+            <v-btn color="green lighten-1"
+                   dark
+                   small
+                   fab
+                   slot="activator">
+                  <v-icon>account_circle</v-icon>
+            </v-btn>
+            <span>Add new Client</span>
+          </v-tooltip>
+
+      </v-speed-dial>
+    </v-fab-transition>
   </main>
 </template>
 
@@ -47,12 +88,14 @@
         budgetsVisible: true,
         snackbar: false,
         timeout: 6000,
-        message: ''
+        message: '',
+        fab: false
       }
     },
     mounted () {
       this.getAllBudgets()
       this.getAllClients()
+      this.hidden = false
     },
     methods: {
       getAllBudgets () {
