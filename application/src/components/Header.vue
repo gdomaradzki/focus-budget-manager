@@ -11,16 +11,9 @@
 
       <v-flex xs12 offset-md1 md1>
         <v-btn block
-               color="light-blue lighten-1"
-               v-if="budgetsVisible"
+               :color="budgetsVisible ? 'light-blue lighten-1' : 'green lighten-1'"
                @click.native="$emit('toggleVisibleData')">
-               Clients
-        </v-btn>
-        <v-btn block
-               color="green lighten-1"
-               @click.native="$emit('toggleVisibleData')"
-               v-else>
-               Budgets
+               {{ budgetsVisible ? "Clients" : "Budgets" }}
         </v-btn>
       </v-flex>
 
