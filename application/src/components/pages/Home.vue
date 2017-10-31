@@ -44,7 +44,7 @@
         clients: [],
         budgetHeaders: ['Client', 'Title', 'Status', 'Actions'],
         clientHeaders: ['Client', 'Email', 'Phone', 'Actions'],
-        budgetsVisible: false,
+        budgetsVisible: true,
         snackbar: false,
         timeout: 6000,
         message: ''
