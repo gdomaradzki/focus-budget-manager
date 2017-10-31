@@ -1,6 +1,6 @@
 <template>
   <main class="l-home-page">
-    <app-header :budgetsVisible="budgetsVisible"></app-header>
+    <app-header :budgetsVisible="budgetsVisible" @toggleVisibleData="budgetsVisible = !budgetsVisible"></app-header>
 
     <div class="l-home">
       <h4 class="white--text text-xs-center my-0">
@@ -9,7 +9,10 @@
 
       <list>
         <list-header slot="list-header" :headers="budgetsVisible ? budgetHeaders : clientHeaders"></list-header>
-        <list-body slot="list-body" :data="budgetsVisible ? budgets : clients"></list-body>
+        <list-body slot="list-body"
+                   :budgetsVisible="budgetsVisible"
+                   :data="budgetsVisible ? budgets : clients">
+        </list-body>
       </list>
     </div>
 
@@ -41,7 +44,7 @@
         clients: [],
         budgetHeaders: ['Client', 'Title', 'Status', 'Actions'],
         clientHeaders: ['Client', 'Email', 'Phone', 'Actions'],
-        budgetsVisible: true,
+        budgetsVisible: false,
         snackbar: false,
         timeout: 6000,
         message: ''
@@ -69,7 +72,7 @@
           headers: { 'Authorization': Authentication.getAuthenticationHeader(this) },
           params: { user_id: this.$cookie.get('user_id') }
         }).then(({data}) => {
-          this.clients = this.dataParser(data, '_id', 'client', 'email', 'phone')
+          this.clients = this.dataParser(data, 'name', 'client', 'email', 'phone')
         }).catch(error => {
           this.snackbar = true
           this.message = error.message

@@ -4,11 +4,13 @@
          v-if="data != null"
          v-for="item in data">
 
-         <div class="md-info white--text" v-for="info in item" v-if="info != item._id">
+         <div :class="budgetsVisible ? 'md-budget-info white--text' : 'md-client-info white--text'"
+              v-for="info in item"
+              v-if="info != item._id">
            {{ info }}
          </div>
 
-        <div class="l-actions">
+        <div :class="budgetsVisible ? 'l-budget-actions white--text' : 'l-client-actions white--text'">
           <v-btn small flat color="light-blue lighten-1">
             <v-icon small>visibility</v-icon>
           </v-btn>
@@ -25,7 +27,7 @@
 
 <script>
   export default {
-    props: ['data']
+    props: ['data', 'budgetsVisible']
   }
 </script>
 
@@ -47,7 +49,7 @@
         margin: 0;
       }
 
-      .md-info {
+      .md-budget-info {
         flex-basis: 25%;
         width: 100%;
         background-color: rgba(0, 175, 255, 0.45);
@@ -71,7 +73,16 @@
         }
       }
 
-      .l-actions {
+      .md-client-info {
+        @extend .md-budget-info;
+        background-color: rgba(102, 187, 106, 0.45)!important;
+
+        &:nth-of-type(2) {
+          text-transform: none;
+        }
+      }
+
+      .l-budget-actions {
         flex-basis: 25%;
         display: flex;
         background-color: rgba(0, 175, 255, 0.45);
@@ -83,6 +94,11 @@
           min-width: 45px !important;
           margin: 0 5px !important;
         }
+      }
+
+      .l-client-actions {
+        @extend .l-budget-actions;
+        background-color: rgba(102, 187, 106, 0.45)!important;
       }
     }
   }
