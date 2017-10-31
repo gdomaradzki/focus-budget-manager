@@ -8,11 +8,11 @@ import Authentication from '@/components/pages/Authentication/Authentication'
 
 // Global components
 import Header from '@/components/Header'
-import BudgetList from '@/components/Budget/BudgetList'
+import List from '@/components/List/List'
 
 // Register components
 Vue.component('app-header', Header)
-Vue.component('budget-list', BudgetList)
+Vue.component('list', List)
 
 Vue.use(Router)
 
@@ -24,10 +24,7 @@ const router = new Router({
       components: {
         default: Home,
         header: Header,
-        budgetList: BudgetList
-      },
-      meta: {
-        requiredAuth: true
+        list: List
       }
     },
     {
@@ -39,7 +36,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiredAuth) {
+  if (to.path !== '/login') {
     if (Auth.default.user.authenticated) {
       next()
     } else {

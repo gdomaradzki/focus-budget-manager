@@ -7,30 +7,41 @@
         Focus Budget Manager
       </h4>
 
-      <budget-list>
-        <budget-list-header slot="budget-list-header"></budget-list-header>
-        <budget-list-body slot="budget-list-body" :budgets="budgets"></budget-list-body>
-      </budget-list>
+      <list>
+        <list-header slot="list-header" :headers="budgetHeaders"></list-header>
+        <list-body slot="list-body" :data="budgets"></list-body>
+      </list>
     </div>
+
+    <v-snackbar :timeout="timeout"
+                bottom="bottom"
+                color="red lighten-1"
+                v-model="snackbar">
+      {{ message }}
+    </v-snackbar>
   </main>
 </template>
 
 <script>
   import Axios from 'axios'
   import Authentication from '@/components/pages/Authentication'
-  import BudgetListHeader from './../Budget/BudgetListHeader'
-  import BudgetListBody from './../Budget/BudgetListBody'
+  import ListHeader from './../List/ListHeader'
+  import ListBody from './../List/ListBody'
 
   const BudgetManagerAPI = `http://${window.location.hostname}:3001`
 
   export default {
     components: {
-      'budget-list-header': BudgetListHeader,
-      'budget-list-body': BudgetListBody
+      'list-header': ListHeader,
+      'list-body': ListBody
     },
     data () {
       return {
-        budgets: []
+        budgets: [],
+        budgetHeaders: ['Client', 'Title', 'Status', 'Actions'],
+        snackbar: false,
+        timeout: 6000,
+        message: ''
       }
     },
     mounted () {
@@ -41,7 +52,20 @@
         Axios.get(`${BudgetManagerAPI}/api/v1/budget`, {
           headers: { 'Authorization': Authentication.getAuthenticationHeader(this) },
           params: { user_id: this.$cookie.get('user_id') }
-        }).then(({data}) => (this.budgets = data))
+        }).then(({data}) => {
+          this.dataParser(data, '_id', 'client', 'title', 'state')
+        }).catch(error => {
+          this.snackbar = true
+          this.message = error.message
+        })
+      },
+
+      dataParser (targetedArray, ...options) {
+        targetedArray.forEach(item => {
+          let parsed = {}
+          options.forEach(option => (parsed[option] = item[option]))
+          this.budgets.push(parsed)
+        })
       }
     }
   }
