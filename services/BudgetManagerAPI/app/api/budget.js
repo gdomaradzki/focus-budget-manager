@@ -4,23 +4,23 @@ const api = {};
 
 api.store = (User, Budget, Client, Token) => (req, res) => {
   if (Token) {
-
-    Client.findOne({ _id: req.body.client_id }, (error, client) => {
+    Client.findOne({ _id: req.body.client }, (error, client) => {
       if (error) res.status(400).json(error);
 
       if (client) {
         const budget = new Budget({
-          client_id: req.body.client_id,
-          user_id: req.body.user_id,
+          client_id: req.body.client,
+          user_id: req.query.user_id,
           client: client.name,
           state: req.body.state,
+          description: req.body.description,
           title: req.body.title,
-          total_price: req.body.total_price,
+          total_price: req.body.total,
           items: req.body.items
         });
 
         budget.save(error => {
-          if (error) res.status(400).json(error)
+          if (error) return res.status(400).json(error)
           res.status(200).json({ success: true, message: "Budget registered successfully" })
         })
       } else {
