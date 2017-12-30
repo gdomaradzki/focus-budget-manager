@@ -16,6 +16,11 @@ const Schema = mongoose.Schema({
     required: true
   },
 
+  description: {
+    type: String,
+    required: true
+  },
+
   total_price: {
     type: Number,
     required: true
