@@ -37,4 +37,22 @@ api.getAll = (User, Client, Token) => (req, res) => {
   } else return res.status(403).send({ success: false, message: 'Unauthorized' });
 }
 
+api.remove = (User, Client, Token) => (req, res) => {
+  if (Token) {
+    User.findOne({ _id: req.query.user_id }, (error, user) => {
+      if (error) res.status(400).json(error);
+
+      if (user) {
+        Client.remove({ _id: req.query._id }, (error, removed) => {
+          if (error) res.status(400).json(error);
+          res.status(200).json({ success: true, message: 'Removed successfully' });
+        })
+      } else {
+        res.status(400).json({ success: false, message: "Invalid client" })
+      }
+    })
+
+  } else return res.status(401).send({ success: false, message: 'Unauthorized' });
+}
+
 module.exports = api;

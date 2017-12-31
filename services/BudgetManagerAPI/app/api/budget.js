@@ -28,7 +28,7 @@ api.store = (User, Budget, Client, Token) => (req, res) => {
       }
     })
 
-  } else return res.status(403).send({ success: false, message: 'Unauthorized' });
+  } else return res.status(401).send({ success: false, message: 'Unauthorized' });
 }
 
 api.getAll = (User, Budget, Token) => (req, res) => {
@@ -48,7 +48,17 @@ api.getAllFromClient = (User, Budget, Token) => (req, res) => {
       res.status(200).json(budget);
       return true;
     })
-  } else return res.status(403).send({ success: false, message: 'Unauthorized' });
+  } else return res.status(401).send({ success: false, message: 'Unauthorized' });
+}
+
+api.remove = (User, Budget, Client, Token) => (req, res) => {
+  if (Token) {
+    Budget.remove({ _id: req.query._id }, (error, removed) => {
+      if (error) res.status(400).json(error);
+      res.status(200).json({ success: true, message: 'Removed successfully' });
+    })
+
+  } else return res.status(401).send({ success: false, message: 'Unauthorized' });
 }
 
 module.exports = api;
