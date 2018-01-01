@@ -15,7 +15,7 @@ api.store = (User, Budget, Client, Token) => (req, res) => {
           state: req.body.state,
           description: req.body.description,
           title: req.body.title,
-          total_price: req.body.total,
+          total_price: req.body.total_price,
           items: req.body.items
         });
 
