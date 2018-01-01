@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import router from '@/router'
 
-const BudgetManagerAPI = 'https://focus-budget-manager-api.herokuapp.com/'
+const BudgetManagerAPI = 'https://focus-budget-manager-api.herokuapp.com'
 
 export default {
   user: { authenticated: false },

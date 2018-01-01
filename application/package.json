@@ -4,6 +4,7 @@
   "description": "A Budget Manager application",
   "author": "Gustavo Domaradzki <gutzedomaradzki@gmail.com>",
   "private": true,
+  "homepage": "https://github.com/gdomaradzki/focus-budget-manager",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
@@ -11,12 +12,14 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
+    "vue-gh-pages": "^1.7.1",
     "vue-router": "^3.0.1",
     "vuetify": "^0.16.7"
   },
