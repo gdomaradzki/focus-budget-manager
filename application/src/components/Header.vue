@@ -2,7 +2,7 @@
   <header class="l-header-container">
     <v-layout row wrap :class="budgetsVisible ? 'l-budgets-header' : 'l-clients-header'">
       <v-flex xs12 md5>
-        <v-text-field v-model="search"
+        <v-text-field v-model="searchValue"
                       label="Search"
                       append-icon="search"
                       :color="budgetsVisible ? 'light-blue lighten-1' : 'green lighten-1'">
@@ -22,7 +22,8 @@
                   :color="budgetsVisible ? 'light-blue lighten-1' : 'green lighten-1'"
                   v-model="status"
                   :items="statusItems"
-                  single-line>
+                  single-line
+                  @change="selectState">
         </v-select>
       </v-flex>
 
@@ -36,15 +37,23 @@
 <script>
   import Authentication from '@/components/pages/Authentication'
   export default {
-    props: ['budgetsVisible'],
+    props: ['budgetsVisible', 'selectState', 'search'],
     data () {
       return {
-        search: '',
+        searchValue: '',
         status: '',
         statusItems: [
-          'All', 'Approved', 'Denied', 'Waiting', 'Writing', 'Editing'
+          'all', 'approved', 'denied', 'waiting', 'writing', 'editing'
         ]
       }
+    },
+    watch: {
+      'searchValue': function () {
+        this.$emit('input', this.searchValue)
+      }
+    },
+    created () {
+      this.searchValue = this.search
     },
     methods: {
       submitSignout () {
@@ -84,5 +93,9 @@
     .btn {
       margin-top: 15px;
     }
+  }
+
+  .list__tile__title, .input-group__selections {
+    text-transform: uppercase !important;
   }
 </style>
