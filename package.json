@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gdomaradzki/focus-gestor-orcamentos.git"
+    "url": "git+https://github.com/gdomaradzki/https://github.com/gdomaradzki/focus-budget-manager.git"
   },
   "keywords": [
     "Vue.js",
@@ -26,9 +26,9 @@
   "author": "Gustavo Domaradzki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gdomaradzki/focus-gestor-orcamentos/issues"
+    "url": "https://github.com/gdomaradzki/https://github.com/gdomaradzki/focus-budget-manager/issues"
   },
-  "homepage": "https://github.com/gdomaradzki/focus-gestor-orcamentos#readme",
+  "homepage": "https://github.com/gdomaradzki/https://github.com/gdomaradzki/focus-budget-manager#readme",
   "_moduleAliases": {
     "@root": ".",
     "@BudgetManager": "./services/BudgetManagerAPI",
