@@ -1,33 +1,55 @@
 <template>
   <section class="l-list-body">
     <div class="md-list-item"
-         v-if="data != null"
+         v-if="data != null && parsedBudgets === null"
          v-for="item in data">
 
-         <div :class="budgetsVisible ? 'md-budget-info white--text' : 'md-client-info white--text'"
-              v-for="info in item"
-              v-if="info != item._id">
-           {{ info }}
-         </div>
+      <div :class="budgetsVisible ? 'md-budget-info white--text' : 'md-client-info white--text'"
+            v-for="info in item"
+            v-if="info != item._id && info != item.client_id">
+        {{ info }}
+      </div>
 
-        <div :class="budgetsVisible ? 'l-budget-actions white--text' : 'l-client-actions white--text'">
-          <v-btn small flat color="light-blue lighten-1">
-            <v-icon small>visibility</v-icon>
-          </v-btn>
-          <v-btn small flat color="yellow accent-1">
-            <v-icon>mode_edit</v-icon>
-          </v-btn>
-          <v-btn small flat color="red lighten-1">
-            <v-icon>delete_forever</v-icon>
-          </v-btn>
-        </div>
+      <div :class="budgetsVisible ? 'l-budget-actions white--text' : 'l-client-actions white--text'">
+        <v-btn small flat color="yellow accent-1" @click.native="getItemAndEdit(item)">
+          <v-icon>mode_edit</v-icon>
+        </v-btn>
+        <v-btn small flat color="red lighten-1" @click.native="deleteItem(item, data, budgetsVisible)">
+          <v-icon>delete_forever</v-icon>
+        </v-btn>
+      </div>
+    </div>
+
+    <div class="md-list-item"
+         v-if="parsedBudgets !== null"
+         v-for="item in parsedBudgets">
+
+      <div :class="budgetsVisible ? 'md-budget-info white--text' : 'md-client-info white--text'"
+            v-for="info in item"
+            v-if="info != item._id && info != item.client_id">
+        {{ info }}
+      </div>
+
+      <div :class="budgetsVisible ? 'l-budget-actions white--text' : 'l-client-actions white--text'">
+        <v-btn small flat color="yellow accent-1" @click.native="getItemAndEdit(item)">
+          <v-icon>mode_edit</v-icon>
+        </v-btn>
+        <v-btn small flat color="red lighten-1" @click.native="deleteItem(item, data, budgetsVisible)">
+          <v-icon>delete_forever</v-icon>
+        </v-btn>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
   export default {
-    props: ['data', 'budgetsVisible']
+    props: ['data', 'budgetsVisible', 'deleteItem', 'getBudget', 'getClient', 'parsedBudgets'],
+    methods: {
+      getItemAndEdit (item) {
+        !item.phone ? this.getBudget(item) : this.getClient(item)
+      }
+    }
   }
 </script>
 
